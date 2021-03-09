@@ -4,10 +4,10 @@ int main(void)
 {
         char c = 'M';
         char *s  = "SANTOS";
-        int     i = 6524;
+        int     i = 3231321;
 
         printf("\n");
-        ft_printf("FT_PRINTF: %-*s E %.*d E %-*c E %*X E %0*X$\n", 10, s , 10, i, 15, c, 15, i, 10,i);
-           printf("   PRINTF: %-*s E %.*d E %-*c E %*X E %0*X$\n", 10, s , 10, i, 15, c, 15, i, 10,i);
+        ft_printf("FT_PRINTF: %-*s E %p E %-*c E %*x E %X$\n", 10, s , &i, 15, c, 15, i,i);
+           printf("   PRINTF: %-*s E %p E %-*c E %*x E %X$\n", 10, s , &i, 15, c, 15, i,i);
         printf("\n");
 }
