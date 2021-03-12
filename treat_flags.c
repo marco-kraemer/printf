@@ -6,7 +6,7 @@
 /*   By: maraurel <maraurel@student.42sp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/10 09:28:26 by maraurel          #+#    #+#             */
-/*   Updated: 2021/03/10 14:07:18 by maraurel         ###   ########.fr       */
+/*   Updated: 2021/03/11 15:32:50 by maraurel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ int		flags_numbers(size_t space, int value, const char *s, int i)
 			while (j++ < space - length)
 				write(1, " ", 1);
 		ft_putstr_fd(ft_itoa(value), 1);
-		return (1);
 	}
 	if (s[i] == '-' && (s[i + 2] == 'i' || s[i + 2] == 'd' || s[i + 2] == 'u'))
 	{
@@ -33,7 +32,6 @@ int		flags_numbers(size_t space, int value, const char *s, int i)
 		if (space >= length)
 			while (j++ < space - length)
 				write(1, " ", 1);
-		return (2);
 	}
 	if ((s[i] == '0' || s[i] == '.') &&
 	(s[i + 2] == 'i' || s[i + 2] == 'd' || s[i + 2] == 'u'))
@@ -42,9 +40,10 @@ int		flags_numbers(size_t space, int value, const char *s, int i)
 			while (j++ < space - length)
 				write(1, "0", 1);
 		ft_putstr_fd(ft_itoa(value), 1);
-		return (2);
 	}
-	return (0);
+	if ((size_t)space > length)
+		return (space - 1);
+	return (length - 1);
 }
 
 int		flags_char(size_t space, int value, const char *s, int i)
@@ -60,7 +59,6 @@ int		flags_char(size_t space, int value, const char *s, int i)
 			while (j++ < space - 1)
 				write(1, " ", 1);
 		ft_putchar_fd(value, 1);
-		return (1);
 	}
 	if (s[i] == '-' && (s[i + 2] == 'c'))
 	{
@@ -68,14 +66,16 @@ int		flags_char(size_t space, int value, const char *s, int i)
 		if (space >= length)
 			while (j++ < space - 1)
 				write(1, " ", 1);
-		return (2);
 	}
-	return (0);
+	if (space < 1)
+		return (0);
+	return (space - 1);
 }
 
 int		flags_hex(size_t space, int value, const char *s, int i)
 {
 	char	*hex;
+	size_t	length;
 	size_t	k;
 	size_t	j;
 	
@@ -105,8 +105,11 @@ int		flags_hex(size_t space, int value, const char *s, int i)
 				write(1, "0", 1);
 		ft_putstr_fd(hex, 1);		
 	}
+	length = ft_strlen(hex);
 	free (hex);
-	return (k);
+	if ((size_t)space > length)
+		return (space - 1);
+	return (length - 1);
 }
 
 int		flags_string(va_list ap, const char *s, int i)
@@ -124,13 +127,17 @@ int		flags_string(va_list ap, const char *s, int i)
 			while (j++ < space - ft_strlen(value))
 				write(1, " ", 1);
 		ft_putstr_fd(value, 1);
-		return (1);
 	}
-	ft_putstr_fd(value, 1);
-	if (space >= ft_strlen(value))
-		while (j++ < space - ft_strlen(value))
-			write(1, " ", 1);
-	return (2);
+	else
+	{
+		ft_putstr_fd(value, 1);
+		if (space >= ft_strlen(value))
+			while (j++ < space - ft_strlen(value))
+				write(1, " ", 1);
+	}
+	if ((size_t)space > ft_strlen(value))
+		return (space - 1);
+	return (ft_strlen(value) - 1);
 }
 
 int		flags_else(va_list ap, const char *s, int i)
