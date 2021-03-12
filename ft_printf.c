@@ -6,7 +6,7 @@
 /*   By: maraurel <maraurel@student.42sp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/24 11:24:24 by maraurel          #+#    #+#             */
-/*   Updated: 2021/03/11 17:16:08 by maraurel         ###   ########.fr       */
+/*   Updated: 2021/03/12 10:43:08 by maraurel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,8 +80,8 @@ int		ft_printf(const char *s, ...)
 		}
 		else
 			write(1, s + i, 1);
-		i++;
 		ret++;
+		i++;
 	}
 	return (ret);
 }

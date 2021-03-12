@@ -6,7 +6,7 @@
 /*   By: maraurel <maraurel@student.42sp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/10 14:10:10 by maraurel          #+#    #+#             */
-/*   Updated: 2021/03/12 08:08:43 by maraurel         ###   ########.fr       */
+/*   Updated: 2021/03/12 09:51:22 by maraurel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,16 @@ int		treat_string(va_list ap, const char *s, int i, int space)
 		if ((size_t) space >= ft_strlen(value))
 			while (j++ < space - ft_strlen(value))
 				write(1, " ", 1);
+	}
+	else if (s[cp] == '.')
+	{
+		cp = 0;
+		while (value[cp] && cp < space)
+		{
+			write(1, &value[cp], 1);
+			cp++;
+		}
+		return (cp - 1);
 	}
 	else
 	{
@@ -131,6 +141,8 @@ int		check_flags(va_list ap, const char *s, int i, int space)
 			i++;
 		if (s[i] == 'i' || s[i] == 'u' || s[i] == 'd' || s[i] == 'x' || s[i] == 'X')
 			ret = ret + treat_numbers(ap, s, i, space, 1);
+		if (s[i] == 's')
+			ret = ret + treat_string(ap, s, i, space);
 	}
 	else
 	{
