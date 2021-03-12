@@ -6,7 +6,7 @@
 /*   By: maraurel <maraurel@student.42sp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/10 14:10:10 by maraurel          #+#    #+#             */
-/*   Updated: 2021/03/12 09:51:22 by maraurel         ###   ########.fr       */
+/*   Updated: 2021/03/12 14:47:12 by maraurel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int		treat_char(va_list ap, const char *s, int i, int space)
 		print(s, i, ap);
 	}
 	if (space > 1)
-		return (space - 1);
+		return (space );
 	return (0);
 }
 
@@ -66,7 +66,7 @@ int		treat_string(va_list ap, const char *s, int i, int space)
 			write(1, &value[cp], 1);
 			cp++;
 		}
-		return (cp - 1);
+		return (cp );
 	}
 	else
 	{
@@ -77,8 +77,8 @@ int		treat_string(va_list ap, const char *s, int i, int space)
 	}
 	va_end(aq);
 	if ((size_t)space > ft_strlen(value))
-		return (space - 1);
-	return (ft_strlen(value) - 1);
+		return (space );
+	return (ft_strlen(value) );
 }
 
 int		treat_numbers(va_list ap, const char *s, int i, int space, int rule)
@@ -121,8 +121,8 @@ int		treat_numbers(va_list ap, const char *s, int i, int space, int rule)
 	free(str_value);
 	va_end(aq);
 	if ((size_t)space > length)
-		return (space - 1);
-	return (length - 1);
+		return (space );
+	return (length );
 }
 
 int		check_flags(va_list ap, const char *s, int i, int space)
@@ -133,8 +133,12 @@ int		check_flags(va_list ap, const char *s, int i, int space)
 	ret = 0;
 	k = i;
 	while (s[k++])
+	{
 		if (s[k] == '%')
-			print(s, k, ap);
+			ret = ret + print(s, k, ap);
+		else if (s[k] == 'i' || s[k] == 'u' || s[k] == 'd' || s[k] == 'x' || s[k] == 'X' || s[k] == 's' || s[k] == 'c')
+			break ;
+	}
 	if (s[i] == '0' || s[i] == '.')
 	{
 		while (ft_isdigit(s[i]) || s[i] == '.')

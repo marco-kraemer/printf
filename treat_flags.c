@@ -6,7 +6,7 @@
 /*   By: maraurel <maraurel@student.42sp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/10 09:28:26 by maraurel          #+#    #+#             */
-/*   Updated: 2021/03/12 09:44:16 by maraurel         ###   ########.fr       */
+/*   Updated: 2021/03/12 14:28:57 by maraurel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,8 @@ int		flags_numbers(size_t space, int value, const char *s, int i)
 		ft_putstr_fd(ft_itoa(value), 1);
 	}
 	if ((size_t)space > length)
-		return (space - 1);
-	return (length - 1);
+		return (space );
+	return (length );
 }
 
 int		flags_char(size_t space, int value, const char *s, int i)
@@ -69,7 +69,7 @@ int		flags_char(size_t space, int value, const char *s, int i)
 	}
 	if (space < 1)
 		return (0);
-	return (space - 1);
+	return (space );
 }
 
 int		flags_hex(size_t space, int value, const char *s, int i)
@@ -108,8 +108,8 @@ int		flags_hex(size_t space, int value, const char *s, int i)
 	length = ft_strlen(hex);
 	free (hex);
 	if ((size_t)space > length)
-		return (space - 1);
-	return (length - 1);
+		return (space );
+	return (length );
 }
 
 int		flags_string(va_list ap, const char *s, int i)
@@ -136,8 +136,8 @@ int		flags_string(va_list ap, const char *s, int i)
 				write(1, " ", 1);
 	}
 	if ((size_t)space > ft_strlen(value))
-		return (space - 1);
-	return (ft_strlen(value) - 1);
+		return (space );
+	return (ft_strlen(value) );
 }
 
 int		flags_else(va_list ap, const char *s, int i)

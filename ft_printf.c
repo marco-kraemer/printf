@@ -6,7 +6,7 @@
 /*   By: maraurel <maraurel@student.42sp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/24 11:24:24 by maraurel          #+#    #+#             */
-/*   Updated: 2021/03/12 10:43:08 by maraurel         ###   ########.fr       */
+/*   Updated: 2021/03/12 14:47:16 by maraurel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int		print(const char *s, int i, va_list ap)
 		ret = 1;
 	}
 	va_end(aq);
-	return (ret - 1);
+	return (ret);
 }
 
 int		ft_printf(const char *s, ...)
@@ -79,8 +79,10 @@ int		ft_printf(const char *s, ...)
 				i++;
 		}
 		else
+		{
 			write(1, s + i, 1);
-		ret++;
+			ret++;
+		}
 		i++;
 	}
 	return (ret);
