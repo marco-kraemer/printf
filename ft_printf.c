@@ -6,58 +6,72 @@
 /*   By: maraurel <maraurel@student.42sp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/24 11:24:24 by maraurel          #+#    #+#             */
-/*   Updated: 2021/03/12 14:47:16 by maraurel         ###   ########.fr       */
+/*   Updated: 2021/03/13 15:43:49 by maraurel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 #include "libft/libft.h"
 
-int		print(const char *s, int i, va_list ap)
+int		conversions(const char *s, int i)
 {
-	va_list aq;
-	int	ret;
+	if (s[i] == 's' || s[i] == 'c' || s[i] == 'p' || s[i] == 'd' || s[i] == 'i' || s[i] == 'u' || s[i] == 'x' || s[i] == 'X')
+		return (1);
+	return (0);
+}
 
-	va_copy(aq, ap);
-	if (s[i] == 's')
+int		get_size(const char *s, int i)
+{
+	int		j;
+
+	j = 0;
+	while (s[i] && conversions(s, i) == 0)
 	{
-		ret = ft_strlen(va_arg(aq, char *));
-		ft_putstr_fd(va_arg(ap, char *), 1);
+		i++;
+		j++;
 	}
-	else if (s[i] == 'c')
+	return (j);
+}
+
+int		determine_type(va_list ap, const char *saved, char type)
+{
+	int		ret;
+
+	ret = 0;
+	if (type == 's')
+		ret = ret + print_string(ap, saved);
+	return (ret);
+}
+
+int		word_snippet(va_list ap, const char *s, int i)
+{
+	char	*saved;
+	char	type;
+	int		j;
+	int		ret;
+
+	j = 0;
+	ret = 0;
+	saved = malloc(get_size(s, i) * sizeof(char));
+	while (s[i] && conversions(s, i) == 0)
 	{
-		ft_putchar_fd(va_arg(ap, int), 1);
-		ret  = 1;
+		*(saved + j) = *(s + i);
+		i++;
+		j++;
 	}
-	else if (s[i] == 'i' || s[i] == 'd' || s[i] == 'u')
-	{
-		ret = ft_strlen(ft_itoa(va_arg(aq, int)));
-		ft_putnbr_fd(va_arg(ap, int), 1);
-	}
-	else if (s[i] == 'x' || s[i] == 'X')
-	{
-		char *hex;
-		hex = print_hex(va_arg(ap, int), s, i);
-		ft_putstr_fd(hex, 1);
-		ret = ft_strlen(hex);
-		free(hex);
-	}
-	else
-	{
-		write(1, "%", 1);
-		ret = 1;
-	}
-	va_end(aq);
+	//*(saved + j) = *(s + i);
+	type = s[i];
+	ret = ret + determine_type(ap, saved,type);
+	free(saved);
 	return (ret);
 }
 
 int		ft_printf(const char *s, ...)
 {
+	va_list	ap;
 	int		i;
 	int		ret;
-	va_list	ap;
 
-	ret = 0;
 	va_start(ap, s);
 	i = 0;
 	while (s[i])
@@ -65,25 +79,15 @@ int		ft_printf(const char *s, ...)
 		if (s[i] == '%')
 		{
 			i++;
-			if (((s[i] == '*' && s[i + 1] == 's') || (s[i] == '-' &&
-			s[i + 1] == '*' && s[i + 2] == 's')) && !(ft_isdigit(s[i + 1])))
-				ret = ret + flags_string(ap, s, i);
-			else if ((s[i] == '*' || s[i] == '-' || s[i] == '0' || s[i] == '.') && !(ft_isdigit(s[i + 1])))
-				ret = ret + flags_else(ap, s, i);
-			else if (((s[i] == '-' || s[i] == '0' || s[i] == '.') && ft_isdigit(s[i + 1]))
-			|| (ft_isdigit(s[i]) ))
-				ret = ret + width_no_asterisk(ap, s, i);
-			else
-				ret = ret + print(s, i, ap);
-			while (s[i] == '-' || s[i] == '0' || s[i] == '.' || s[i] == '*' || ft_isdigit(s[i]))
+			ret = ret + word_snippet(ap, s, i);
+			while (s[i] && conversions(s, i) == 0)
 				i++;
+			i++;
 		}
-		else
-		{
-			write(1, s + i, 1);
-			ret++;
-		}
+		write(1, &s[i], 1);
 		i++;
+		ret++;
 	}
+	va_end(ap);
 	return (ret);
 }

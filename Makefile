@@ -6,7 +6,7 @@
 #    By: maraurel <maraurel@student.42sp>           +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/02/24 11:24:10 by maraurel          #+#    #+#              #
-#    Updated: 2021/03/10 14:10:40 by maraurel         ###   ########.fr        #
+#    Updated: 2021/03/13 16:02:06 by maraurel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,9 +14,8 @@ NAME = libftprintf.a
 
 
 SRC = ft_printf.c \
-	treat_flags.c \
 	hexconverter.c \
-	no_asterisk.c
+	1.c
 
 HEADER = printflibft.h
 
