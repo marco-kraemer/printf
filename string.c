@@ -6,7 +6,7 @@
 /*   By: maraurel <maraurel@student.42sp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/10 14:10:10 by maraurel          #+#    #+#             */
-/*   Updated: 2021/03/15 10:16:23 by maraurel         ###   ########.fr       */
+/*   Updated: 2021/03/15 13:03:52 by maraurel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,6 +156,11 @@ int		print_string(va_list ap, const char *saved)
 	if (ft_strlen(saved) == 0)
 	{
 		print = va_arg(ap, char*);
+		if (print == NULL)
+		{
+			ft_putstr_fd("(null)", 1);
+			return (6);
+		}
 		ft_putstr_fd(print, 1);
 		return (ft_strlen(print));
 	}
