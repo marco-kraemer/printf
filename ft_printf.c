@@ -6,7 +6,7 @@
 /*   By: maraurel <maraurel@student.42sp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/24 11:24:24 by maraurel          #+#    #+#             */
-/*   Updated: 2021/03/13 15:43:49 by maraurel         ###   ########.fr       */
+/*   Updated: 2021/03/14 10:46:29 by maraurel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ int		ft_printf(const char *s, ...)
 
 	va_start(ap, s);
 	i = 0;
+	ret = 0;
 	while (s[i])
 	{
 		if (s[i] == '%')
@@ -84,9 +85,12 @@ int		ft_printf(const char *s, ...)
 				i++;
 			i++;
 		}
-		write(1, &s[i], 1);
-		i++;
-		ret++;
+		else
+		{
+			write(1, &s[i], 1);
+			i++;
+			ret++;
+		}
 	}
 	va_end(ap);
 	return (ret);
