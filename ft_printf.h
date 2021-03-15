@@ -6,7 +6,7 @@
 /*   By: maraurel <maraurel@student.42sp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/24 11:24:32 by maraurel          #+#    #+#             */
-/*   Updated: 2021/03/14 08:49:12 by maraurel         ###   ########.fr       */
+/*   Updated: 2021/03/15 15:20:36 by maraurel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,5 +21,6 @@
 
 int		ft_printf(const char *s, ...);
 int		print_string(va_list ap, const char *saved);
+int		print_integer(va_list ap, const char *saved);
 
 #endif

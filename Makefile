@@ -6,7 +6,7 @@
 #    By: maraurel <maraurel@student.42sp>           +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/02/24 11:24:10 by maraurel          #+#    #+#              #
-#    Updated: 2021/03/14 09:15:36 by maraurel         ###   ########.fr        #
+#    Updated: 2021/03/15 15:16:51 by maraurel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,8 @@ NAME = libftprintf.a
 
 SRC = ft_printf.c \
 	hexconverter.c \
-	string.c
+	string.c \
+	integer.c
 
 HEADER = printflibft.h
 

@@ -6,12 +6,11 @@
 /*   By: maraurel <maraurel@student.42sp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/24 11:24:24 by maraurel          #+#    #+#             */
-/*   Updated: 2021/03/14 10:46:29 by maraurel         ###   ########.fr       */
+/*   Updated: 2021/03/15 15:17:03 by maraurel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
-#include "libft/libft.h"
 
 int		conversions(const char *s, int i)
 {
@@ -40,6 +39,8 @@ int		determine_type(va_list ap, const char *saved, char type)
 	ret = 0;
 	if (type == 's')
 		ret = ret + print_string(ap, saved);
+	if (type == 'i')
+		ret = ret + print_integer(ap, saved);
 	return (ret);
 }
 
