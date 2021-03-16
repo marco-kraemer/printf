@@ -6,7 +6,7 @@
 /*   By: maraurel <maraurel@student.42sp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/15 15:16:19 by maraurel          #+#    #+#             */
-/*   Updated: 2021/03/16 11:29:17 by maraurel         ###   ########.fr       */
+/*   Updated: 2021/03/16 11:51:31 by maraurel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 int		treat_int_0(va_list ap, size_t length, int precision, const char *saved)
 {
 	char	*tmp;
+	char	*tmp1;
 	char	*print;
 	int		i;
 	int		j;
@@ -25,8 +26,11 @@ int		treat_int_0(va_list ap, size_t length, int precision, const char *saved)
 	tmp = ft_itoa(va_arg(ap, int));
 	if (tmp[0] == '-')
 	{
-		tmp = ft_substr(tmp, 1, ft_strlen(tmp) - 1);
+		tmp1 = ft_substr(tmp, 1, ft_strlen(tmp) - 1);
+		free(tmp);
 		j = 1;
+		tmp = ft_strdup(tmp1);
+		free(tmp1);
 	}
 	if (length > ft_strlen(tmp) && (int)length > precision)
 		print = malloc(length * sizeof(char));
@@ -68,15 +72,16 @@ int		treat_int_0(va_list ap, size_t length, int precision, const char *saved)
 	*(print + i) = '\0';
 	ft_putstr_fd(print, 1);
 	ret = ft_strlen(print);
-	//if (print[0] == '-')
-	//	free(tmp);
-	//free(print);
+	i = 0;
+	free(tmp);
+	free(print);
 	return (ret);
 }
 
 int		treat_int_1(va_list ap, size_t length, int precision)
 {
 	char	*tmp;
+	char	*tmp1;
 	char	*print;
 	int		i;
 	int		j;
@@ -86,8 +91,11 @@ int		treat_int_1(va_list ap, size_t length, int precision)
 	tmp = ft_itoa(va_arg(ap, int));
 	if (tmp[0] == '-')
 	{
-		tmp = ft_substr(tmp, 1, ft_strlen(tmp) - 1);
+		tmp1 = ft_substr(tmp, 1, ft_strlen(tmp) - 1);
+		free(tmp);
 		j = 1;
+		tmp = ft_strdup(tmp1);
+		free(tmp1);
 	}
 	if (length > ft_strlen(tmp) && (int)length > precision)
 		print = malloc(length * sizeof(char));
@@ -114,9 +122,9 @@ int		treat_int_1(va_list ap, size_t length, int precision)
 	*(print + i) = '\0';
 	ft_putstr_fd(print, 1);
 	ret = ft_strlen(print);
-	//if (print[0] == '-')
-	//	free(tmp);
-	//free(print);
+	i = 0;
+	free(tmp);
+	free(print);
 	return (ret);
 }
 
@@ -133,7 +141,9 @@ int		print_integer(va_list ap, const char *saved)
 		if (print == NULL)
 			print = "(null)";
 		ft_putstr_fd(print, 1);
-		return (ft_strlen(print));
+		ret = ft_strlen(print);
+		free(print);
+		return (ret);
 	}
 	ret = 0;
 	length = get_length(ap, saved);
