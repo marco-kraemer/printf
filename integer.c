@@ -6,65 +6,117 @@
 /*   By: maraurel <maraurel@student.42sp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/15 15:16:19 by maraurel          #+#    #+#             */
-/*   Updated: 2021/03/15 15:20:16 by maraurel         ###   ########.fr       */
+/*   Updated: 2021/03/16 11:29:17 by maraurel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int		get_length(va_list ap, const char *saved)
+int		treat_int_0(va_list ap, size_t length, int precision, const char *saved)
 {
-	char	*length;
-	int		ret;
+	char	*tmp;
+	char	*print;
 	int		i;
 	int		j;
+	int		ret;
 
 	i = 0;
-	if (is_flag(saved, i) == 2 
-	|| (is_flag(saved, i) == 1 && is_flag(saved, i + 1) == 2))
-		return (-1);
-	while (is_flag(saved, i) != 0)
-		i++;
-	if (saved[i] == '*')
-		return (va_arg(ap, int));
+	ret = 0;
+	tmp = ft_itoa(va_arg(ap, int));
+	if (tmp[0] == '-')
+	{
+		tmp = ft_substr(tmp, 1, ft_strlen(tmp) - 1);
+		j = 1;
+	}
+	if (length > ft_strlen(tmp) && (int)length > precision)
+		print = malloc(length * sizeof(char));
+	else if (precision > (int)ft_strlen(tmp) && precision > (int)length)
+		print = malloc(precision * sizeof(char));
+	else
+		print = malloc(ft_strlen(tmp) * sizeof(char));
+	if (saved[0] == '0' && precision == -1)
+	{
+		while (precision + i < (int)length && i < (int)length - (int) ft_strlen(tmp))
+			*(print + i++) = '0';
+		ret = i - 1;
+	}
+	if (precision < 0)
+		precision = ft_strlen(tmp);
+	while (precision + i < (int)length && i < (int)length - (int) ft_strlen(tmp))
+		*(print + i++) = ' ';
+	if (j == 1)
+	{
+		if (ft_strlen(tmp) >= length)
+		{
+			print[0] = '-';
+			i++;
+		}
+		else if (i > 0)
+			*(print + i - 1 - ret) = '-';
+		else
+		{
+			*(print + i) = '-';
+			i++;
+		}
+	}
 	j = 0;
-	while (ft_isdigit(saved[j]))
-		j++;
-	length = malloc(j * sizeof(char));
+	while (j++ < precision - (int)ft_strlen(tmp))
+		*(print + i++) = '0';
 	j = 0;
-	while (ft_isdigit(saved[i]))
-		*(length + j++) = *(saved + i++);
-	ret = ft_atoi(length);
-	free(length);
+	while (j < (int)ft_strlen(tmp))
+		*(print + i++) = *(tmp + j++);
+	*(print + i) = '\0';
+	ft_putstr_fd(print, 1);
+	ret = ft_strlen(print);
+	//if (print[0] == '-')
+	//	free(tmp);
+	//free(print);
 	return (ret);
 }
 
-int		get_precision(va_list ap, const char *saved)
+int		treat_int_1(va_list ap, size_t length, int precision)
 {
-	char	*precision;
-	int		ret;
+	char	*tmp;
+	char	*print;
 	int		i;
 	int		j;
+	int		ret;
 
 	i = 0;
-	while (is_flag(saved, i) != 2 && saved[i])
-		i++;
-	if (is_flag(saved, i) == 2)
-		i++;
+	tmp = ft_itoa(va_arg(ap, int));
+	if (tmp[0] == '-')
+	{
+		tmp = ft_substr(tmp, 1, ft_strlen(tmp) - 1);
+		j = 1;
+	}
+	if (length > ft_strlen(tmp) && (int)length > precision)
+		print = malloc(length * sizeof(char));
+	else if (precision > (int)ft_strlen(tmp) && precision > (int)length)
+		print = malloc(precision * sizeof(char));
 	else
-		return (-1);
-	if (saved[i] == '*')
-		return (va_arg(ap, int));
-	j = i;
-	while (ft_isdigit(saved[j]))
-		j++;
-	precision = malloc(j * sizeof(char));
-	j = i;
-	i = 0;
-	while (ft_isdigit(saved[j]))
-		*(precision + i++) = *(saved + j++);
-	ret = ft_atoi(precision);
-	free(precision);
+		print = malloc(ft_strlen(tmp) * sizeof(char));
+	if (j == 1)
+	{
+		print[0] = '-';
+		i++;
+	}
+	if (precision < 0)
+		precision = ft_strlen(tmp);
+	j = 0;
+	while (j++ < precision - (int)ft_strlen(tmp))
+		*(print + i++) = '0';
+	j = 0;
+	while (j < (int)ft_strlen(tmp))
+		*(print + i++) = *(tmp + j++);
+	j = 0;
+	while (precision + j++ < (int)length && i < (int)length)
+		*(print + i++) = ' ';
+	*(print + i) = '\0';
+	ft_putstr_fd(print, 1);
+	ret = ft_strlen(print);
+	//if (print[0] == '-')
+	//	free(tmp);
+	//free(print);
 	return (ret);
 }
 
@@ -73,12 +125,11 @@ int		print_integer(va_list ap, const char *saved)
 	char	*print;
 	size_t	precision;
 	size_t	length;
-	int		i;
 	int		ret;
 
 	if (ft_strlen(saved) == 0)
 	{
-		print = va_arg(ap, char*);
+		print = ft_itoa(va_arg(ap,  int));
 		if (print == NULL)
 			print = "(null)";
 		ft_putstr_fd(print, 1);
@@ -87,11 +138,18 @@ int		print_integer(va_list ap, const char *saved)
 	ret = 0;
 	length = get_length(ap, saved);
 	precision = get_precision(ap, saved);
-	printf("\n%i\n%i", length, precision);
-	/*i = 0;
-	if (is_flag(saved, i) == 0 || is_flag(saved, i) == 3)
-		ret = ret + treat_case_0(ap, length, precision);
+	if (precision == 0)
+	{
+		while (ret < (int)length)
+		{
+			write(1, " ", 1);
+			ret++;
+		}
+		return (ret);
+	}
+	if (is_flag(saved, 0) != 1 && is_flag(saved, 1) != 1)
+		ret = ret + treat_int_0(ap, length, precision, saved);
 	else
-		ret = ret + treat_case_1(ap, length, precision);
-	return (ret); */
+		ret = ret + treat_int_1(ap, length, precision);
+	return (ret);
 }
