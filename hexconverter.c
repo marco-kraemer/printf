@@ -6,13 +6,13 @@
 /*   By: maraurel <maraurel@student.42sp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/10 09:43:11 by maraurel          #+#    #+#             */
-/*   Updated: 2021/03/10 10:15:22 by maraurel         ###   ########.fr       */
+/*   Updated: 2021/03/16 22:35:11 by maraurel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-char	*print_hex(int i, const char *s, int k)
+char	*get_hex(unsigned int i, char type)
 {
 	int		j;
 	int		temp;
@@ -20,8 +20,13 @@ char	*print_hex(int i, const char *s, int k)
 	char	reverse[100];
 	char	*ret;
 
-	if (i < 0)
-		i = i * (-1);
+	if (i == 0)
+	{
+		ret = malloc(1);
+		ret[0] = '0';
+		ret[1] = '\0';
+		return (ret);
+	}
 	j = 0;
 	while (i != 0)
 	{
@@ -30,7 +35,7 @@ char	*print_hex(int i, const char *s, int k)
 			temp = temp + 48;
 		else
 		{
-			if (s[k] == 'X')
+			if (type == 'X')
 				temp = temp + 55;
 			else
 				temp = temp + 87;
@@ -51,5 +56,6 @@ char	*print_hex(int i, const char *s, int k)
 		*(ret + i) = reverse[i];
 		i++;
 	}
+	ret[i] = '\0';
 	return (ret);
 }

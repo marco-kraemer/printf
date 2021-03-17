@@ -6,7 +6,7 @@
 #    By: maraurel <maraurel@student.42sp>           +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/02/24 11:24:10 by maraurel          #+#    #+#              #
-#    Updated: 2021/03/15 15:29:15 by maraurel         ###   ########.fr        #
+#    Updated: 2021/03/16 22:09:29 by maraurel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,8 @@ SRC = ft_printf.c \
 	hexconverter.c \
 	string.c \
 	integer.c \
-	ft_printf_utils.c
+	ft_printf_utils.c \
+	hex.c
 
 HEADER = printflibft.h
 
