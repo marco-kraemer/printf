@@ -6,7 +6,7 @@
 /*   By: maraurel <maraurel@student.42sp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/24 11:24:24 by maraurel          #+#    #+#             */
-/*   Updated: 2021/03/18 10:25:00 by maraurel         ###   ########.fr       */
+/*   Updated: 2021/03/18 12:08:57 by maraurel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int		conversions(const char *s, int i)
 {
 	if (s[i] == 's' || s[i] == 'c' || s[i] == 'p' || s[i] == 'd'
-	|| s[i] == 'i' || s[i] == 'u' || s[i] == 'x' || s[i] == 'X')
+	|| s[i] == 'i' || s[i] == 'u' || s[i] == 'x' || s[i] == 'X' || s[i] == '%')
 		return (1);
 	return (0);
 }
@@ -48,6 +48,8 @@ int		determine_type(va_list ap, const char *saved, char type)
 		ret = ret + print_char(ap, saved);
 	if (type == 'p')
 		ret = ret + print_address(ap, saved);
+	if (type == '%')
+		ret = ret + print_percent();
 	return (ret);
 }
 

@@ -6,7 +6,7 @@
 /*   By: maraurel <maraurel@student.42sp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/17 09:13:11 by maraurel          #+#    #+#             */
-/*   Updated: 2021/03/18 09:30:47 by maraurel         ###   ########.fr       */
+/*   Updated: 2021/03/18 12:42:00 by maraurel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,27 +23,30 @@ int		treat_adr_0(va_list ap, size_t length, int precision, const char *saved, ch
 
 	i = 0;
 	j = 0;
-	tmp = get_hex(va_arg(ap, int), type);
-	if (tmp[0] == '0')
+	tmp = get_address(va_arg(ap, int), type);
+	if (tmp == NULL)
 	{
 		free(tmp);
+		while (i++ < (int)length - 5)
+			write (1, " ", 1);
 		ft_putstr_fd("(nil)", 1);
-		return (5);
+		return (4 + i);
 	}
 	ret = 0;
 	if (tmp[0] == '-')
 	{
 		tmp1 = ft_substr(tmp, 1, ft_strlen(tmp) - 1);
 		free(tmp);
+		j = 1;
 		tmp = ft_strdup(tmp1);
 		free(tmp1);
 	}
 	if (length > ft_strlen(tmp) && (int)length > precision)
-		print = malloc(length + 6 * sizeof(char));
+		print = malloc(length * sizeof(char));
 	else if (precision > (int)ft_strlen(tmp) && precision > (int)length)
-		print = malloc(precision + 6 * sizeof(char));
+		print = malloc(precision * sizeof(char));
 	else
-		print = malloc(ft_strlen(tmp) + 6 * sizeof(char));
+		print = malloc(ft_strlen(tmp) * sizeof(char));
 	if (saved[0] == '0' && precision == -1)
 	{
 		while (precision + i < (int)length && i < (int)length - (int) ft_strlen(tmp))
@@ -54,18 +57,27 @@ int		treat_adr_0(va_list ap, size_t length, int precision, const char *saved, ch
 		precision = ft_strlen(tmp);
 	while (precision + i < (int)length && i < (int)length - (int) ft_strlen(tmp))
 		*(print + i++) = ' ';
+	if (j == 1)
+	{
+		if (ft_strlen(tmp) >= length)
+		{
+			print[0] = '-';
+			i++;
+		}
+		else if (i > 0)
+			*(print + i - 1 - ret) = '-';
+		else
+		{
+			*(print + i) = '-';
+			i++;
+		}
+	}
 	j = 0;
 	while (j++ < precision - (int)ft_strlen(tmp))
 		*(print + i++) = '0';
-	print[i] = '0';
-	print[i + 1] = 'x';
-	print[i + 2] = '7';
-	print[i + 3] = 'f';
-	print[i + 4] = 'f';
-	print[i + 5] = 'f';
 	j = 0;
-	while (j < (int)ft_strlen(tmp) + 6)
-		*(print + (i++ + 6)) = *(tmp + j++);
+	while (j < (int)ft_strlen(tmp))
+		*(print + i++) = *(tmp + j++);
 	*(print + i) = '\0';
 	ft_putstr_fd(print, 1);
 	ret = ft_strlen(print);
@@ -86,7 +98,15 @@ int		treat_adr_1(va_list ap, size_t length, int precision, char type)
 
 	i = 0;
 	j = 0;
-	tmp = get_hex(va_arg(ap, int), type);
+	tmp = get_address(va_arg(ap, int), type);
+	if (tmp == NULL)
+	{
+		free(tmp);
+		while (i++ < (int)length - 5)
+			write (1, " ", 1);
+		ft_putstr_fd("(nil)", 1);
+		return (4 + i);
+	}
 	ret = 0;
 	if (tmp[0] == '-')
 	{
@@ -114,13 +134,9 @@ int		treat_adr_1(va_list ap, size_t length, int precision, char type)
 		*(print + i++) = '0';
 	print[i] = '0';
 	print[i + 1] = 'x';
-	print[i + 2] = '7';
-	print[i + 3] = 'f';
-	print[i + 4] = 'f';
-	print[i + 5] = 'f';
 	j = 0;
-	while (j < (int)ft_strlen(tmp) + 6)
-		*(print + (i++ + 6)) = *(tmp + j++);
+	while (j < (int)ft_strlen(tmp) + 2)
+		*(print + (i++ + 2)) = *(tmp + j++);
 	j = 0;
 	while (precision + j++ < (int)length && i < (int)length)
 		*(print + i++) = ' ';
@@ -161,15 +177,6 @@ int		print_address(va_list ap, const char *saved)
 	ret = 0;
 	length = get_length(ap, saved);
 	precision = get_precision(ap, saved);
-	if (precision == 0)
-	{
-		while (ret < (int)length)
-		{
-			write(1, " ", 1);
-			ret++;
-		}
-		return (ret);
-	}
 	if (is_flag(saved, 0) != 1 && is_flag(saved, 1) != 1)
 		ret = ret + treat_adr_0(ap, length, precision, saved, 'x');
 	else
