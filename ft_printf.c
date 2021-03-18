@@ -6,7 +6,7 @@
 /*   By: maraurel <maraurel@student.42sp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/24 11:24:24 by maraurel          #+#    #+#             */
-/*   Updated: 2021/03/17 10:29:59 by maraurel         ###   ########.fr       */
+/*   Updated: 2021/03/18 10:25:00 by maraurel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ int		word_snippet(va_list ap, const char *s, int i)
 		i++;
 		j++;
 	}
+	*(saved + j) = '\0';
 	type = s[i];
 	ret = ret + determine_type(ap, saved, type);
 	free(saved);

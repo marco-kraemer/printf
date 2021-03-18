@@ -6,7 +6,7 @@
 /*   By: maraurel <maraurel@student.42sp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/16 22:08:00 by maraurel          #+#    #+#             */
-/*   Updated: 2021/03/16 22:18:11 by maraurel         ###   ########.fr       */
+/*   Updated: 2021/03/18 09:30:17 by maraurel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ int		treat_hex_0(va_list ap, size_t length, int precision, const char *saved, ch
 	int		ret;
 
 	i = 0;
+	j = 0;
 	tmp = get_hex(va_arg(ap, int), type);
 	ret = 0;
 	if (tmp[0] == '-')
@@ -88,6 +89,7 @@ int		treat_hex_1(va_list ap, size_t length, int precision, char type)
 	int		ret;
 
 	i = 0;
+	j = 0;
 	tmp = get_hex(va_arg(ap, int), type);
 	ret = 0;
 	if (tmp[0] == '-')
