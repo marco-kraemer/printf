@@ -6,7 +6,7 @@
 /*   By: maraurel <maraurel@student.42sp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/24 11:24:24 by maraurel          #+#    #+#             */
-/*   Updated: 2021/03/16 22:14:18 by maraurel         ###   ########.fr       */
+/*   Updated: 2021/03/17 10:29:59 by maraurel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 
 int		conversions(const char *s, int i)
 {
-	if (s[i] == 's' || s[i] == 'c' || s[i] == 'p' || s[i] == 'd' || s[i] == 'i' || s[i] == 'u' || s[i] == 'x' || s[i] == 'X')
+	if (s[i] == 's' || s[i] == 'c' || s[i] == 'p' || s[i] == 'd'
+	|| s[i] == 'i' || s[i] == 'u' || s[i] == 'x' || s[i] == 'X')
 		return (1);
 	return (0);
 }
@@ -43,6 +44,10 @@ int		determine_type(va_list ap, const char *saved, char type)
 		ret = ret + print_integer(ap, saved);
 	if (type == 'x' || type == 'X')
 		ret = ret + print_hex(ap, saved, type);
+	if (type == 'c')
+		ret = ret + print_char(ap, saved);
+	if (type == 'p')
+		ret = ret + print_address(ap, saved);
 	return (ret);
 }
 
@@ -62,9 +67,8 @@ int		word_snippet(va_list ap, const char *s, int i)
 		i++;
 		j++;
 	}
-	//*(saved + j) = *(s + i);
 	type = s[i];
-	ret = ret + determine_type(ap, saved,type);
+	ret = ret + determine_type(ap, saved, type);
 	free(saved);
 	return (ret);
 }
@@ -86,14 +90,13 @@ int		ft_printf(const char *s, ...)
 			ret = ret + word_snippet(ap, s, i);
 			while (s[i] && conversions(s, i) == 0)
 				i++;
-			i++;
 		}
 		else
 		{
 			write(1, &s[i], 1);
-			i++;
 			ret++;
 		}
+		i++;
 	}
 	va_end(ap);
 	return (ret);
