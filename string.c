@@ -6,7 +6,7 @@
 /*   By: maraurel <maraurel@student.42sp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/10 14:10:10 by maraurel          #+#    #+#             */
-/*   Updated: 2021/03/18 10:25:23 by maraurel         ###   ########.fr       */
+/*   Updated: 2021/03/18 10:53:28 by maraurel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,16 +49,37 @@ int		treat_case_0(va_list ap, size_t length, int precision, int j)
 	i = 0;
 	tmp = va_arg(ap, char*);
 	if (tmp == NULL)
-	{
 		tmp = "(null)";
-		if (precision > 0 && precision < 6)
-			precision = 0;
-	}
 	print = null_and_malloc(tmp, length, precision, 0);
 	if (precision > (int)ft_strlen(tmp) || precision < 0)
 		precision = ft_strlen(tmp);
 	while (i < ((int)length - precision))
 		*(print + i++) = ' ';
+	j = 0;
+	while (j < precision)
+		*(print + i++) = *(tmp + j++);
+	*(print + i) = '\0';
+	ft_putstr_fd(print, 1);
+	i = ft_strlen(print);
+	free(print);
+	return (i);
+}
+
+int		treat_case_2(va_list ap, size_t length, int precision, int j)
+{
+	char	*tmp;
+	char	*print;
+	int		i;
+
+	i = 0;
+	tmp = va_arg(ap, char*);
+	if (tmp == NULL)
+		tmp = "(null)";
+	print = null_and_malloc(tmp, length, precision, 0);
+	if (precision > (int)ft_strlen(tmp) || precision < 0)
+		precision = ft_strlen(tmp);
+	while (i < ((int)length - precision))
+		*(print + i++) = '0';
 	j = 0;
 	while (j < precision)
 		*(print + i++) = *(tmp + j++);
@@ -77,11 +98,7 @@ int		treat_case_1(va_list ap, size_t length, int precision)
 
 	tmp = va_arg(ap, char*);
 	if (tmp == NULL)
-	{
 		tmp = "(null)";
-		if (precision > 0 && precision < 6)
-			precision = 0;
-	}
 	print = null_and_malloc(tmp, length, precision, 1);
 	if (precision > (int)ft_strlen(tmp) || precision < 0)
 		precision = ft_strlen(tmp);
@@ -118,8 +135,10 @@ int		print_string(va_list ap, const char *saved)
 	length = get_length(ap, saved);
 	precision = get_precision(ap, saved);
 	i = 0;
-	if (is_flag(saved, i) == 0 || is_flag(saved, i) == 3)
+	if (is_flag(saved, i) == 0)
 		ret = ret + treat_case_0(ap, length, precision, 0);
+	else if (is_flag(saved, i) == 3)
+		ret = ret + treat_case_2(ap, length, precision, 0);
 	else
 		ret = ret + treat_case_1(ap, length, precision);
 	return (ret);
