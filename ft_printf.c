@@ -6,7 +6,7 @@
 /*   By: maraurel <maraurel@student.42sp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/24 11:24:24 by maraurel          #+#    #+#             */
-/*   Updated: 2021/03/18 12:08:57 by maraurel         ###   ########.fr       */
+/*   Updated: 2021/03/19 14:02:59 by maraurel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int		determine_type(va_list ap, const char *saved, char type)
 	if (type == 'p')
 		ret = ret + print_address(ap, saved);
 	if (type == '%')
-		ret = ret + print_percent();
+		ret = ret + print_percent(ap, saved);
 	return (ret);
 }
 

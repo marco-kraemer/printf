@@ -6,7 +6,7 @@
 /*   By: maraurel <maraurel@student.42sp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/24 11:24:32 by maraurel          #+#    #+#             */
-/*   Updated: 2021/03/19 10:37:16 by maraurel         ###   ########.fr       */
+/*   Updated: 2021/03/19 14:09:21 by maraurel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int		get_length(va_list ap, const char *saved);
 int		is_flag(const char *saved, int i);
 int		print_char(va_list ap, const char *saved);
 int		print_address(va_list ap, const char *saved);
-int		print_percent(void);
+int		print_percent(va_list ap, const char *saved);
 char	*malloc_print_integer(size_t length, char *tmp, int precision, int function);
 char	*is_negative(char *tmp, int j);
 char	*get_hex(unsigned int i, char type);

@@ -6,7 +6,7 @@
 /*   By: maraurel <maraurel@student.42sp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/17 09:13:11 by maraurel          #+#    #+#             */
-/*   Updated: 2021/03/19 10:38:01 by maraurel         ###   ########.fr       */
+/*   Updated: 2021/03/19 14:40:48 by maraurel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,6 @@ int		treat_adr_1(va_list ap, size_t length, int precision, char type)
 
 	i = 0;
 	j = 0;
-	write(1, "T", 1);
 	tmp = get_address2(va_arg(ap, int), type);
 	ret = 0;
 	if (tmp[0] == '-')
