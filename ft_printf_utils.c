@@ -6,7 +6,7 @@
 /*   By: maraurel <maraurel@student.42sp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/15 15:26:09 by maraurel          #+#    #+#             */
-/*   Updated: 2021/03/18 12:02:24 by maraurel         ###   ########.fr       */
+/*   Updated: 2021/03/19 20:41:43 by maraurel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,14 @@ int		is_flag(const char *saved, int i)
 	return (0);
 }
 
-int		get_length(va_list ap, const char *saved)
+int		get_length(va_list ap, char *saved)
 {
 	char	*length;
+	char	*old_saved;
 	int		ret;
 	int		i;
 	int		j;
+	int		k;
 
 	i = 0;
 	if (is_flag(saved, i) == 2 
@@ -37,7 +39,29 @@ int		get_length(va_list ap, const char *saved)
 	while (is_flag(saved, i) != 0)
 		i++;
 	if (saved[i] == '*')
-		return (va_arg(ap, int));
+	{
+		ret = va_arg(ap, int);
+		if (ret < 0)
+		{
+			old_saved = ft_strdup(saved);
+			j = 0;
+			k = 0;
+			while (old_saved[k])
+			{
+				if (j == i)
+				{
+					*(saved + j) = '-';
+					j++;
+				}
+				*(saved + j) = *(old_saved + k);
+				j++;
+				k++;
+			}
+			free(old_saved);
+			ret = ret * (-1);
+		}
+		return (ret);
+	}
 	j = 0;
 	while (ft_isdigit(saved[j]))
 		j++;
@@ -66,7 +90,10 @@ int		get_precision(va_list ap, const char *saved)
 	else
 		return (-1);
 	if (saved[i] == '*')
-		return (va_arg(ap, int));
+	{
+		i = va_arg(ap, int);
+		return (i);
+	}
 	j = i;
 	k = 0;
 	while (ft_isdigit(saved[j]))

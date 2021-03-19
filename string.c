@@ -6,7 +6,7 @@
 /*   By: maraurel <maraurel@student.42sp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/10 14:10:10 by maraurel          #+#    #+#             */
-/*   Updated: 2021/03/18 12:02:53 by maraurel         ###   ########.fr       */
+/*   Updated: 2021/03/19 20:14:19 by maraurel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,7 @@ int		treat_case_1(va_list ap, size_t length, int precision)
 	return (i);
 }
 
-int		print_string(va_list ap, const char *saved)
+int		print_string(va_list ap, char *saved)
 {
 	char	*print;
 	size_t	precision;

@@ -6,7 +6,7 @@
 /*   By: maraurel <maraurel@student.42sp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/17 08:28:43 by maraurel          #+#    #+#             */
-/*   Updated: 2021/03/17 09:08:55 by maraurel         ###   ########.fr       */
+/*   Updated: 2021/03/19 20:13:55 by maraurel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ int		treat_char_1(va_list ap, size_t length)
 	return (ret);
 }
 
-int		print_char(va_list ap, const char *saved)
+int		print_char(va_list ap, char *saved)
 {
 	char	print;
 	size_t	length;

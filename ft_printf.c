@@ -6,7 +6,7 @@
 /*   By: maraurel <maraurel@student.42sp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/24 11:24:24 by maraurel          #+#    #+#             */
-/*   Updated: 2021/03/19 14:02:59 by maraurel         ###   ########.fr       */
+/*   Updated: 2021/03/19 20:10:06 by maraurel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int		get_size(const char *s, int i)
 	return (j);
 }
 
-int		determine_type(va_list ap, const char *saved, char type)
+int		determine_type(va_list ap, char *saved, char type)
 {
 	int		ret;
 

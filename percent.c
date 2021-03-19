@@ -6,13 +6,13 @@
 /*   By: maraurel <maraurel@student.42sp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/18 12:01:44 by maraurel          #+#    #+#             */
-/*   Updated: 2021/03/19 14:13:17 by maraurel         ###   ########.fr       */
+/*   Updated: 2021/03/19 20:14:10 by maraurel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int		print_percent(va_list ap, const char *saved)
+int		print_percent(va_list ap, char *saved)
 {
 	int		length;
 	int		i;
