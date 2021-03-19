@@ -6,7 +6,7 @@
 #    By: maraurel <maraurel@student.42sp>           +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/02/24 11:24:10 by maraurel          #+#    #+#              #
-#    Updated: 2021/03/19 19:35:45 by maraurel         ###   ########.fr        #
+#    Updated: 2021/03/19 20:54:23 by maraurel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,14 +15,14 @@ NAME = libftprintf.a
 
 SRC = ft_printf.c \
 	hexconverter.c \
-	string.c \
-	integer.c \
+	treat_string.c \
+	treat_integer.c \
 	ft_printf_utils.c \
-	hex.c \
-	char.c \
-	address.c \
-	integer_utils.c \
-	percent.c \
+	treat_hex.c \
+	treat_char.c \
+	treat_address.c \
+	treat_integer_utils.c \
+	treat_percent.c \
 	addressconverter.c \
 	addressconverter2.c \
 	addressconverter3.c

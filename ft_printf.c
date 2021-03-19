@@ -6,7 +6,7 @@
 /*   By: maraurel <maraurel@student.42sp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/24 11:24:24 by maraurel          #+#    #+#             */
-/*   Updated: 2021/03/19 20:10:06 by maraurel         ###   ########.fr       */
+/*   Updated: 2021/03/19 20:54:58 by maraurel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,9 @@ int		determine_type(va_list ap, char *saved, char type)
 	ret = 0;
 	if (type == 's')
 		ret = ret + print_string(ap, saved);
-	if (type == 'i' || type == 'd' || type == 'u')
+	if (type == 'i' || type == 'd')
+		ret = ret + print_integer(ap, saved);
+	if (type == 'u')
 		ret = ret + print_integer(ap, saved);
 	if (type == 'x' || type == 'X')
 		ret = ret + print_hex(ap, saved, type);
