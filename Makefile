@@ -6,7 +6,7 @@
 #    By: maraurel <maraurel@student.42sp>           +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/02/24 11:24:10 by maraurel          #+#    #+#              #
-#    Updated: 2021/03/19 10:37:02 by maraurel         ###   ########.fr        #
+#    Updated: 2021/03/19 19:35:45 by maraurel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -59,3 +59,8 @@ run:
 	@clear
 	@gcc main.c $(NAME)
 	@./a.out
+
+git:
+	git add .
+	git commit -m "Update"
+	git push
