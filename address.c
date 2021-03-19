@@ -6,7 +6,7 @@
 /*   By: maraurel <maraurel@student.42sp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/17 09:13:11 by maraurel          #+#    #+#             */
-/*   Updated: 2021/03/18 12:42:00 by maraurel         ###   ########.fr       */
+/*   Updated: 2021/03/18 22:12:10 by maraurel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ int		treat_adr_1(va_list ap, size_t length, int precision, char type)
 
 	i = 0;
 	j = 0;
-	tmp = get_address(va_arg(ap, int), type);
+	tmp = get_hex(va_arg(ap, int), type);
 	if (tmp == NULL)
 	{
 		free(tmp);
@@ -158,8 +158,8 @@ int		print_address(va_list ap, const char *saved)
 
 	if (ft_strlen(saved) == 0)
 	{
-		print = get_hex(va_arg(ap, int), 'x');
-		if (print[0] == '0')
+		print = get_address(va_arg(ap, int), 'x');
+		if (print == NULL)
 		{
 			free(print);
 			print = "(nil)";
