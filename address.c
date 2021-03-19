@@ -6,7 +6,7 @@
 /*   By: maraurel <maraurel@student.42sp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/17 09:13:11 by maraurel          #+#    #+#             */
-/*   Updated: 2021/03/19 08:59:17 by maraurel         ###   ########.fr       */
+/*   Updated: 2021/03/19 10:16:16 by maraurel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,15 +23,10 @@ int		treat_adr_0(va_list ap, size_t length, int precision, const char *saved, ch
 
 	i = 0;
 	j = 0;
-	tmp = get_address(va_arg(ap, int), type);
-	if (tmp == NULL)
-	{
-		free(tmp);
-		while (i++ < (int)length - 5)
-			write (1, " ", 1);
-		ft_putstr_fd("(nil)", 1);
-		return (4 + i);
-	}
+	if (precision < 0)
+		tmp = get_address(va_arg(ap, int), type);
+	else
+		tmp = get_address2(va_arg(ap, int), type);
 	ret = 0;
 	if (tmp[0] == '-')
 	{
@@ -98,16 +93,8 @@ int		treat_adr_1(va_list ap, size_t length, int precision, char type)
 
 	i = 0;
 	j = 0;
+	write(1, "T", 1);
 	tmp = get_address2(va_arg(ap, int), type);
-
-	if (tmp == NULL)
-	{
-		free(tmp);
-		while (i++ < (int)length - 5)
-			write (1, " ", 1);
-		ft_putstr_fd("(nil)", 1);
-		return (4 + i);
-	}
 	ret = 0;
 	if (tmp[0] == '-')
 	{
@@ -163,7 +150,7 @@ int		print_address(va_list ap, const char *saved)
 		if (print == NULL)
 		{
 			free(print);
-			print = "(nil)";
+			print = "0x0";
 			ft_putstr_fd(print, 1);
 			ret = ft_strlen(print);
 		}

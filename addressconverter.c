@@ -6,7 +6,7 @@
 /*   By: maraurel <maraurel@student.42sp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/10 09:43:11 by maraurel          #+#    #+#             */
-/*   Updated: 2021/03/19 08:54:08 by maraurel         ###   ########.fr       */
+/*   Updated: 2021/03/19 09:48:52 by maraurel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,12 @@ char	*get_address(unsigned int i, char type)
 	char	*ret;
 
 	if (i == 0)
-		return (NULL);
-	if (i == 0)
 	{
-		ret = malloc(1);
+		ret = malloc(3);
 		ret[0] = '0';
-		ret[1] = '\0';
+		ret[1] = 'x';
+		ret[2] = '0';
+		ret[3] = '\0';
 		return (ret);
 	}
 	j = 0;

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   addressconverter.c                                 :+:      :+:    :+:   */
+/*   addressconverter2.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: maraurel <maraurel@student.42sp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/10 09:43:11 by maraurel          #+#    #+#             */
-/*   Updated: 2021/03/19 09:08:12 by maraurel         ###   ########.fr       */
+/*   Updated: 2021/03/19 09:49:43 by maraurel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,12 @@ char	*get_address2(unsigned int i, char type)
 	char	*ret;
 
 	if (i == 0)
-		return (NULL);
-	if (i == 0)
 	{
-		ret = malloc(1);
+		ret = malloc(3);
 		ret[0] = '0';
-		ret[1] = '\0';
+		ret[1] = 'x';
+		ret[2] = '0';
+		ret[3] = '\0';
 		return (ret);
 	}
 	j = 0;
