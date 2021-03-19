@@ -6,7 +6,7 @@
 #    By: maraurel <maraurel@student.42sp>           +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/02/24 11:24:10 by maraurel          #+#    #+#              #
-#    Updated: 2021/03/18 12:31:09 by maraurel         ###   ########.fr        #
+#    Updated: 2021/03/19 08:57:09 by maraurel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,8 @@ SRC = ft_printf.c \
 	address.c \
 	integer_utils.c \
 	percent.c \
-	addressconverter.c
+	addressconverter.c \
+	addressconverter2.c
 
 HEADER = printflibft.h
 
