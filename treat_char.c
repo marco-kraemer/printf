@@ -6,7 +6,7 @@
 /*   By: maraurel <maraurel@student.42sp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/17 08:28:43 by maraurel          #+#    #+#             */
-/*   Updated: 2021/03/19 21:09:03 by maraurel         ###   ########.fr       */
+/*   Updated: 2021/03/20 09:34:00 by maraurel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,8 @@ int		print_char(va_list ap, char *saved)
 	int		i;
 	int		ret;
 
-	if (ft_strlen(saved) == 0)
+	i = 0;
+	if (ft_strlen(saved) == 0 || is_flag(saved, i) == 2)
 	{
 		print = va_arg(ap, int);
 		ft_putchar_fd(print, 1);
@@ -78,7 +79,6 @@ int		print_char(va_list ap, char *saved)
 	}
 	ret = 0;
 	length = get_length(ap, saved);
-	i = 0;
 	if (is_flag(saved, i) == 0 || is_flag(saved, i) == 3)
 		ret = ret + treat_char_0(ap, length);
 	else

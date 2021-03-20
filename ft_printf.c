@@ -6,7 +6,7 @@
 /*   By: maraurel <maraurel@student.42sp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/24 11:24:24 by maraurel          #+#    #+#             */
-/*   Updated: 2021/03/20 08:36:59 by maraurel         ###   ########.fr       */
+/*   Updated: 2021/03/20 09:53:25 by maraurel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,13 @@ int		conversions(const char *s, int i)
 	|| s[i] == 'i' || s[i] == 'u' || s[i] == 'x' || s[i] == 'X' || s[i] == '%')
 		return (1);
 	return (0);
+}
+
+int		is_length(const char *s, int i)
+{
+	if (s[i] == 'l' || s[i] == 'h')
+		return (0);
+	return (1);
 }
 
 int		get_size(const char *s, int i)
@@ -97,7 +104,7 @@ int		ft_printf(const char *s, ...)
 		{
 			i++;
 			ret = ret + word_snippet(ap, s, i);
-			while (s[i] && conversions(s, i) == 0)
+			while (s[i] && conversions(s, i) == 0 && is_length(s, i) != 0)
 				i++;
 		}
 		else
