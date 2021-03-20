@@ -6,7 +6,7 @@
 /*   By: maraurel <maraurel@student.42sp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/24 11:24:24 by maraurel          #+#    #+#             */
-/*   Updated: 2021/03/20 09:53:25 by maraurel         ###   ########.fr       */
+/*   Updated: 2021/03/20 10:18:36 by maraurel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int		conversions(const char *s, int i)
 
 int		is_length(const char *s, int i)
 {
-	if (s[i] == 'l' || s[i] == 'h')
+	if (s[i] == 'l' || s[i] == 'h' || s[i] == 'f' || s[i] == 'L')
 		return (0);
 	return (1);
 }
