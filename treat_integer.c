@@ -6,7 +6,7 @@
 /*   By: maraurel <maraurel@student.42sp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/15 15:16:19 by maraurel          #+#    #+#             */
-/*   Updated: 2021/03/19 21:39:50 by maraurel         ###   ########.fr       */
+/*   Updated: 2021/03/20 09:57:21 by maraurel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,6 @@ int		treat_int_0(va_list ap, size_t length, int precision, const char *saved)
 			*(print + i - 1 - ret) = '-';
 		else
 		{
-			write(1, "T", 1);
 			*(print + i) = '-';
 			i++;
 		}
