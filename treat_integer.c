@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   integer.c                                          :+:      :+:    :+:   */
+/*   treat_integer.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: maraurel <maraurel@student.42sp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/15 15:16:19 by maraurel          #+#    #+#             */
-/*   Updated: 2021/03/19 20:42:52 by maraurel         ###   ########.fr       */
+/*   Updated: 2021/03/19 21:39:50 by maraurel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ int		treat_int_0(va_list ap, size_t length, int precision, const char *saved)
 
 	i = 0;
 	j = 0;
+	ret = 0;
 	tmp = ft_itoa(va_arg(ap, int));
 	if (tmp[0] == '-')
 		j = 1;
@@ -69,6 +70,7 @@ int		treat_int_0(va_list ap, size_t length, int precision, const char *saved)
 			*(print + i - 1 - ret) = '-';
 		else
 		{
+			write(1, "T", 1);
 			*(print + i) = '-';
 			i++;
 		}
