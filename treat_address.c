@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   address.c                                          :+:      :+:    :+:   */
+/*   treat_address.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: maraurel <maraurel@student.42sp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/17 09:13:11 by maraurel          #+#    #+#             */
-/*   Updated: 2021/03/19 20:13:42 by maraurel         ###   ########.fr       */
+/*   Updated: 2021/03/19 21:22:10 by maraurel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,7 @@ int		treat_adr_0(va_list ap, size_t length, int precision, const char *saved, ch
 		free(tmp);
 		tmp = ft_strdup(tmp1);
 		free(tmp1);
-		printf("\n%s\n", tmp1);
 		write(1, "0x", 2);
-		//i = i + 2;
 	}
 	ret = 0;
 	if (tmp[0] == '-')
