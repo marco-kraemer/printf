@@ -6,26 +6,11 @@
 /*   By: maraurel <maraurel@student.42sp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/24 11:24:24 by maraurel          #+#    #+#             */
-/*   Updated: 2021/03/21 15:15:11 by maraurel         ###   ########.fr       */
+/*   Updated: 2021/03/21 17:32:45 by maraurel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
-
-int		conversions(const char *s, int i)
-{
-	if (s[i] == 's' || s[i] == 'c' || s[i] == 'p' || s[i] == 'd'
-	|| s[i] == 'i' || s[i] == 'u' || s[i] == 'x' || s[i] == 'X' || s[i] == '%')
-		return (1);
-	return (0);
-}
-
-int		is_length(const char *s, int i)
-{
-	if (s[i] == 'l' || s[i] == 'h' || s[i] == 'f' || s[i] == 'L')
-		return (0);
-	return (1);
-}
 
 int		get_size(const char *s, int i)
 {

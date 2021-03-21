@@ -6,27 +6,47 @@
 /*   By: maraurel <maraurel@student.42sp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/17 09:13:11 by maraurel          #+#    #+#             */
-/*   Updated: 2021/03/21 11:55:58 by maraurel         ###   ########.fr       */
+/*   Updated: 2021/03/21 16:59:51 by maraurel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int		treat_adr_0(va_list ap, size_t length, int precision, const char *saved)
+int		treat_adr_0_1(t_flags flags, char *tmp, char *print)
+{
+	int		j;
+	int		i;
+
+	i = flags.k;
+	while (flags.precision + i < (int)flags.width &&
+	i < (int)flags.width - (int)ft_strlen(tmp))
+		*(print + i++) = ' ';
+	j = 0;
+	while (j++ < flags.precision - (int)ft_strlen(tmp))
+		*(print + i++) = '0';
+	j = 0;
+	while (j < (int)ft_strlen(tmp))
+		*(print + i++) = *(tmp + j++);
+	*(print + i) = '\0';
+	ft_putstr_fd(print, 1);
+	flags.k = ft_strlen(print);
+	free(tmp);
+	free(print);
+	return (flags.k);
+}
+
+int		treat_adr_0(va_list ap, t_flags flags)
 {
 	char	*tmp;
 	char	*print;
 	char	*tmp1;
 	int		i;
-	int		j;
 	int		k;
-	int		ret;
 
 	i = 0;
-	j = 0;
 	k = 0;
-	tmp = get_address(va_arg(ap, unsigned long long), precision);
-	if (precision > (int)ft_strlen(tmp))
+	tmp = get_address(va_arg(ap, unsigned long long), flags.precision);
+	if (flags.precision > (int)ft_strlen(tmp))
 	{
 		tmp1 = ft_substr(tmp, 2, (ft_strlen(tmp) - 2));
 		free(tmp);
@@ -35,95 +55,67 @@ int		treat_adr_0(va_list ap, size_t length, int precision, const char *saved)
 		write(1, "0x", 2);
 		k = 2;
 	}
-	ret = 0;
-	if (length > ft_strlen(tmp) && (int)length > precision)
-		print = malloc(length * sizeof(char));
-	else if (precision > (int)ft_strlen(tmp) && precision > (int)length)
-		print = malloc(precision * sizeof(char));
-	else
-		print = malloc(ft_strlen(tmp) * sizeof(char));
-	if (saved[0] == '0' && precision == -1)
-	{
-		while (precision + i < (int)length && i < (int)length - (int) ft_strlen(tmp))
-			*(print + i++) = '0';
-		ret = i - 1;
-	}
-	while (precision + i < (int)length && i < (int)length - (int) ft_strlen(tmp))
-		*(print + i++) = ' ';
+	flags.k = i;
+	print = malloc_print_integer(flags.width, tmp, flags.precision, 0);
+	return (treat_adr_0_1(flags, tmp, print) + k);
+}
+
+int		treat_adr_1_1(t_flags flags, char *tmp, char *print, int i)
+{
+	int		j;
+
+	if (flags.precision < 0)
+		flags.precision = ft_strlen(tmp);
 	j = 0;
-	while (j++ < precision - (int)ft_strlen(tmp))
+	while (j++ < flags.precision - (int)ft_strlen(tmp))
 		*(print + i++) = '0';
 	j = 0;
 	while (j < (int)ft_strlen(tmp))
 		*(print + i++) = *(tmp + j++);
+	j = 0;
+	while (flags.precision + j++ < (int)flags.width && i < (int)flags.width)
+		*(print + i++) = ' ';
 	*(print + i) = '\0';
 	ft_putstr_fd(print, 1);
-	ret = ft_strlen(print);
+	flags.k = ft_strlen(print);
 	i = 0;
 	free(tmp);
 	free(print);
-	return (ret + k);
+	return (flags.k);
 }
 
-int		treat_adr_1(va_list ap, size_t length, int precision)
+int		treat_adr_1(va_list ap, t_flags flags)
 {
 	char	*tmp;
 	char	*print;
 	int		i;
-	int		j;
-	int		ret;
 
 	i = 0;
-	j = 0;
-	tmp = get_address(va_arg(ap, unsigned long long), precision);
-	ret = 0;
-	if (length > ft_strlen(tmp) && (int)length > precision)
-		print = malloc(length * sizeof(char));
-	else if (precision > (int)ft_strlen(tmp) && precision > (int)length)
-		print = malloc(precision * sizeof(char));
-	else
-		print = malloc(ft_strlen(tmp) * sizeof(char));
-	if (precision < 0)
-		precision = ft_strlen(tmp);
-	j = 0;
-	while (j++ < precision - (int)ft_strlen(tmp))
-		*(print + i++) = '0';
-	j = 0;
-	while (j < (int)ft_strlen(tmp))
-		*(print + i++) = *(tmp + j++);
-	j = 0;
-	while (precision + j++ < (int)length && i < (int)length)
-		*(print + i++) = ' ';
-	*(print + i) = '\0';
-	ft_putstr_fd(print, 1);
-	ret = ft_strlen(print);
-	i = 0;
-	free(tmp);
-	free(print);
-	return (ret);
+	tmp = get_address(va_arg(ap, unsigned long long), flags.precision);
+	flags.k = 0;
+	print = malloc_print_integer(flags.width, tmp, flags.precision, 0);
+	return (treat_adr_1_1(flags, tmp, print, i));
 }
 
 int		print_address(va_list ap, char *saved)
 {
 	char	*print;
-	size_t	precision;
-	size_t	length;
-	int		ret;
+	t_flags	flags;
 
 	if (ft_strlen(saved) == 0)
 	{
 		print = get_address(va_arg(ap, unsigned long long), -1);
 		ft_putstr_fd(print, 1);
-		ret = ft_strlen(print);
+		flags.k = ft_strlen(print);
 		free(print);
-		return (ret);
+		return (flags.k);
 	}
-	ret = 0;
-	length = get_length(ap, saved);
-	precision = get_precision(ap, saved);
+	flags.k = 0;
+	flags.width = get_length(ap, saved);
+	flags.precision = get_precision(ap, saved);
 	if (is_flag(saved, 0) != 1 && is_flag(saved, 1) != 1)
-		ret = ret + treat_adr_0(ap, length, precision, saved);
+		flags.k = flags.k + treat_adr_0(ap, flags);
 	else
-		ret = ret + treat_adr_1(ap, length, precision);
-	return (ret);
+		flags.k = flags.k + treat_adr_1(ap, flags);
+	return (flags.k);
 }

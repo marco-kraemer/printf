@@ -6,7 +6,7 @@
 #    By: maraurel <maraurel@student.42sp>           +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/02/24 11:24:10 by maraurel          #+#    #+#              #
-#    Updated: 2021/03/21 12:52:24 by maraurel         ###   ########.fr        #
+#    Updated: 2021/03/21 17:26:49 by maraurel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,7 +25,9 @@ SRC = ft_printf.c \
 	treat_percent.c \
 	treat_unsigned.c \
 	addressconverter.c \
-	ft_itoa_unsigned.c
+	ft_itoa_unsigned.c \
+	get_precision.c \
+	get_width.c
 
 HEADER = printflibft.h
 

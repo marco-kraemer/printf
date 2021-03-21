@@ -6,7 +6,7 @@
 /*   By: maraurel <maraurel@student.42sp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/06 19:02:09 by maraurel          #+#    #+#             */
-/*   Updated: 2021/03/20 21:00:05 by maraurel         ###   ########.fr       */
+/*   Updated: 2021/03/21 16:27:38 by maraurel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,8 @@ char	*reverse1(char *p, char *tmp, unsigned int i, unsigned int n)
 
 char	*ft_itoa_unsigned(unsigned int n)
 {
-	char	*p;
-	char	tmp[count_digits1(n)];
+	char			*p;
+	char			tmp[count_digits1(n)];
 	unsigned int	i;
 	unsigned int	c;
 	unsigned int	cpy;

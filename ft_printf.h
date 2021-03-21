@@ -6,7 +6,7 @@
 /*   By: maraurel <maraurel@student.42sp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/24 11:24:32 by maraurel          #+#    #+#             */
-/*   Updated: 2021/03/21 15:33:02 by maraurel         ###   ########.fr       */
+/*   Updated: 2021/03/21 17:28:08 by maraurel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,8 @@ int		print_char(va_list ap, char *saved);
 int		print_address(va_list ap, char *saved);
 int		print_percent(va_list ap, char *saved);
 int		print_unsigned(va_list ap, char *saved);
+int		conversions(const char *s, int i);
+int		is_length(const char *s, int i);
 int		treat_int_0_negative(char *tmp, char *print, t_flags flags, int i);
 char	*ft_itoa_unsigned(unsigned int n);
 char	*malloc_print_integer(size_t length, char *tmp, int precision, int function);
