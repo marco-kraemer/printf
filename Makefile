@@ -6,7 +6,7 @@
 #    By: maraurel <maraurel@student.42sp>           +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/02/24 11:24:10 by maraurel          #+#    #+#              #
-#    Updated: 2021/03/21 11:21:45 by maraurel         ###   ########.fr        #
+#    Updated: 2021/03/21 12:52:24 by maraurel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,7 +31,7 @@ HEADER = printflibft.h
 
 OBJS = $(SRC:.c=.o)
 
-all: $(NAME) run
+all: $(NAME)
 
 $(NAME): lib
 	@gcc -Wall -Wextra -Werror -c $(SRC)
