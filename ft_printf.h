@@ -6,7 +6,7 @@
 /*   By: maraurel <maraurel@student.42sp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/24 11:24:32 by maraurel          #+#    #+#             */
-/*   Updated: 2021/03/21 10:42:49 by maraurel         ###   ########.fr       */
+/*   Updated: 2021/03/21 11:37:01 by maraurel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,6 @@ char	*ft_itoa_unsigned(unsigned int n);
 char	*malloc_print_integer(size_t length, char *tmp, int precision, int function);
 char	*is_negative(char *tmp, int j);
 char	*get_hex(unsigned int i, char type);
-char	*get_address(unsigned long long i, char type);
-char	*get_address2(unsigned int i, char type);
-char	*get_address3(unsigned int i, char type);
+char	*get_address(unsigned long long i, int function);
 
 #endif

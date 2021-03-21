@@ -6,13 +6,13 @@
 /*   By: maraurel <maraurel@student.42sp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/17 09:13:11 by maraurel          #+#    #+#             */
-/*   Updated: 2021/03/21 11:16:26 by maraurel         ###   ########.fr       */
+/*   Updated: 2021/03/21 11:42:05 by maraurel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int		treat_adr_0(va_list ap, size_t length, int precision, const char *saved, char type)
+int		treat_adr_0(va_list ap, size_t length, int precision, const char *saved)
 {
 	char	*tmp;
 	char	*tmp1;
@@ -25,10 +25,9 @@ int		treat_adr_0(va_list ap, size_t length, int precision, const char *saved, ch
 	i = 0;
 	j = 0;
 	k = 0;
-	if (precision < 0)
-		tmp = get_address(va_arg(ap, unsigned long long), type);
-	else
-		tmp = get_address(va_arg(ap, unsigned long long), type);
+	tmp = get_address(va_arg(ap, unsigned long long), precision);
+	if (tmp == NULL)
+		tmp = "0x0\0";
 	if (precision > (int)ft_strlen(tmp))
 	{
 		tmp1 = ft_substr(tmp, 2, (ft_strlen(tmp) - 2));
@@ -93,7 +92,7 @@ int		treat_adr_0(va_list ap, size_t length, int precision, const char *saved, ch
 	return (ret + k);
 }
 
-int		treat_adr_1(va_list ap, size_t length, int precision, char type)
+int		treat_adr_1(va_list ap, size_t length, int precision)
 {
 	char	*tmp;
 	char	*tmp1;
@@ -104,7 +103,9 @@ int		treat_adr_1(va_list ap, size_t length, int precision, char type)
 
 	i = 0;
 	j = 0;
-	tmp = get_address(va_arg(ap, unsigned long long), type);
+	tmp = get_address(va_arg(ap, unsigned long long), precision);
+	if (tmp == NULL)
+		tmp = "x0\0";
 	ret = 0;
 	if (tmp[0] == '-')
 	{
@@ -154,7 +155,7 @@ int		print_address(va_list ap, char *saved)
 
 	if (ft_strlen(saved) == 0)
 	{
-		print = get_address(va_arg(ap, unsigned long long), 'x');
+		print = get_address(va_arg(ap, unsigned long long), 0);
 		if (print == NULL)
 		{
 			free(print);
@@ -174,8 +175,8 @@ int		print_address(va_list ap, char *saved)
 	length = get_length(ap, saved);
 	precision = get_precision(ap, saved);
 	if (is_flag(saved, 0) != 1 && is_flag(saved, 1) != 1)
-		ret = ret + treat_adr_0(ap, length, precision, saved, 'x');
+		ret = ret + treat_adr_0(ap, length, precision, saved);
 	else
-		ret = ret + treat_adr_1(ap, length, precision, 'x');
+		ret = ret + treat_adr_1(ap, length, precision);
 	return (ret);
 }

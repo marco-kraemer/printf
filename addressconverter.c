@@ -6,13 +6,13 @@
 /*   By: maraurel <maraurel@student.42sp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/10 09:43:11 by maraurel          #+#    #+#             */
-/*   Updated: 2021/03/21 11:18:44 by maraurel         ###   ########.fr       */
+/*   Updated: 2021/03/21 11:38:56 by maraurel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-char	*get_address(unsigned long long i, char type)
+char	*get_address(unsigned long long i, int precision)
 {
 	int		j;
 	int		temp;
@@ -25,7 +25,11 @@ char	*get_address(unsigned long long i, char type)
 		ret = malloc(3);
 		ret[0] = '0';
 		ret[1] = 'x';
-		ret[2] = '\0';
+		if (precision >= 0)
+			ret[2] = '\0';
+		else
+			ret[2] = '0';
+		ret[3] = '\0';
 		return (ret);
 	}
 	j = 0;
@@ -35,12 +39,7 @@ char	*get_address(unsigned long long i, char type)
 		if (temp < 10)
 			temp = temp + 48;
 		else
-		{
-			if (type == 'X')
-				temp = temp + 55;
-			else
-				temp = temp + 87;
-		}
+			temp = temp + 87;
 		hex[j++] = temp;
 		i = i / 16;
 	}
