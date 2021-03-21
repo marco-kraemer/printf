@@ -6,7 +6,7 @@
 /*   By: maraurel <maraurel@student.42sp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/24 11:24:32 by maraurel          #+#    #+#             */
-/*   Updated: 2021/03/21 18:47:05 by maraurel         ###   ########.fr       */
+/*   Updated: 2021/03/21 20:48:09 by maraurel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int					conversions(const char *s, int i);
 int					is_length(const char *s, int i);
 int					treat_int_0_negative(char *tmp, char *print,
 		t_flags flags, int i);
-
+int					no_precision(t_flags flags, va_list ap);
 char				*ft_itoa_unsigned(unsigned int n);
 char				*malloc_print_integer(size_t length, char *tmp,
 		int precision, int function);

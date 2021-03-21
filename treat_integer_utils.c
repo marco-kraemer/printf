@@ -6,7 +6,7 @@
 /*   By: maraurel <maraurel@student.42sp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/17 17:03:01 by maraurel          #+#    #+#             */
-/*   Updated: 2021/03/21 20:45:07 by maraurel         ###   ########.fr       */
+/*   Updated: 2021/03/21 20:50:20 by maraurel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,4 +65,24 @@ int		treat_int_0_negative(char *tmp, char *print, t_flags flags, int i)
 		*(print + i) = '-';
 	i++;
 	return (i);
+}
+
+int		no_precision(t_flags flags, va_list ap)
+{
+	char	*print;
+
+	flags.k = 0;
+	print = ft_itoa(va_arg(ap, int));
+	if (print[0] == '0')
+	{
+		while (flags.k++ < (int)flags.width)
+			write(1, " ", 1);
+	}
+	else
+	{
+		while (flags.k++ < (int)flags.width - (int)ft_strlen(print))
+			write(1, " ", 1);
+		ft_putstr_fd(print, 1);
+	}
+	return (flags.k - 1);
 }

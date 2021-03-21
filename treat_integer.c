@@ -6,7 +6,7 @@
 /*   By: maraurel <maraurel@student.42sp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/15 15:16:19 by maraurel          #+#    #+#             */
-/*   Updated: 2021/03/21 20:46:51 by maraurel         ###   ########.fr       */
+/*   Updated: 2021/03/21 20:49:29 by maraurel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,26 +106,6 @@ int		treat_int_1(va_list ap, t_flags flags)
 	return (treat_int_1_1(flags, tmp, i, print));
 }
 
-int		no_precision(t_flags flags, va_list ap)
-{
-	char	*print;
-
-	flags.k = 0;
-	print = ft_itoa(va_arg(ap, int));
-	if (print[0] == '0')
-	{
-		while (flags.k++ < (int)flags.width)
-			write(1, " ", 1);	
-	}
-	else
-	{
-		while (flags.k++ < (int)flags.width - (int)ft_strlen(print))
-			write(1, " ", 1);
-		ft_putstr_fd(print, 1);
-	}
-	return (flags.k - 1);
-}
-
 int		print_integer(va_list ap, char *saved)
 {
 	char	*print;
@@ -144,9 +124,7 @@ int		print_integer(va_list ap, char *saved)
 		return (flags.k);
 	}
 	if (flags.precision == 0)
-	{
 		return (no_precision(flags, ap));
-	}
 	if (is_flag(saved, 0) != 1 && is_flag(saved, 1) != 1)
 		return (treat_int_0(ap, flags, saved));
 	return (treat_int_1(ap, flags));
