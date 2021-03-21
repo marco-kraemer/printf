@@ -6,7 +6,7 @@
 /*   By: maraurel <maraurel@student.42sp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/15 15:26:09 by maraurel          #+#    #+#             */
-/*   Updated: 2021/03/19 20:41:43 by maraurel         ###   ########.fr       */
+/*   Updated: 2021/03/21 09:35:14 by maraurel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,9 +75,11 @@ int		get_length(va_list ap, char *saved)
 	return (ret);
 }
 
-int		get_precision(va_list ap, const char *saved)
+int		get_precision(va_list ap, char *saved)
 {
 	char	*precision;
+	char	*old_saved;
+	int		ret;
 	int		k;
 	int		i;
 	int		j;
@@ -91,8 +93,27 @@ int		get_precision(va_list ap, const char *saved)
 		return (-1);
 	if (saved[i] == '*')
 	{
-		i = va_arg(ap, int);
-		return (i);
+		ret = va_arg(ap, int);
+		if (ret < 0)
+		{
+			old_saved = ft_strdup(saved);
+			j = 0;
+			k = 0;
+			while (old_saved[k])
+			{
+				if (old_saved[k] == '.')
+				{
+					*(saved + j) = '\0';
+					break ;
+				//	j++;
+				}
+				*(saved + j) = *(old_saved + k);
+				j++;
+				k++;
+			}
+			free(old_saved);
+		}
+		return (-1);
 	}
 	j = i;
 	k = 0;

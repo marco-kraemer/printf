@@ -6,7 +6,7 @@
 /*   By: maraurel <maraurel@student.42sp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/15 15:16:19 by maraurel          #+#    #+#             */
-/*   Updated: 2021/03/20 09:57:21 by maraurel         ###   ########.fr       */
+/*   Updated: 2021/03/21 09:33:54 by maraurel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,6 +124,8 @@ int		print_integer(va_list ap, char *saved)
 	size_t	length;
 	int		ret;
 
+	length = get_length(ap, saved);
+	precision = get_precision(ap, saved);
 	if (ft_strlen(saved) == 0)
 	{
 		print = ft_itoa(va_arg(ap, int));
@@ -135,8 +137,6 @@ int		print_integer(va_list ap, char *saved)
 		return (ret);
 	}
 	ret = 0;
-	length = get_length(ap, saved);
-	precision = get_precision(ap, saved);
 	if (precision == 0)
 	{
 		while (ret < (int)length)

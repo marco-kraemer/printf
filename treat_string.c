@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   string.c                                           :+:      :+:    :+:   */
+/*   treat_string.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: maraurel <maraurel@student.42sp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/10 14:10:10 by maraurel          #+#    #+#             */
-/*   Updated: 2021/03/19 20:14:19 by maraurel         ###   ########.fr       */
+/*   Updated: 2021/03/21 09:28:45 by maraurel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,6 +123,8 @@ int		print_string(va_list ap, char *saved)
 	int		i;
 	int		ret;
 
+	length = get_length(ap, saved);
+	precision = get_precision(ap, saved);
 	if (ft_strlen(saved) == 0)
 	{
 		print = va_arg(ap, char*);
@@ -132,8 +134,6 @@ int		print_string(va_list ap, char *saved)
 		return (ft_strlen(print));
 	}
 	ret = 0;
-	length = get_length(ap, saved);
-	precision = get_precision(ap, saved);
 	i = 0;
 	if (is_flag(saved, i) == 0)
 		ret = ret + treat_case_0(ap, length, precision, 0);
