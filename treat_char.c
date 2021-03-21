@@ -6,7 +6,7 @@
 /*   By: maraurel <maraurel@student.42sp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/17 08:28:43 by maraurel          #+#    #+#             */
-/*   Updated: 2021/03/20 20:28:40 by maraurel         ###   ########.fr       */
+/*   Updated: 2021/03/21 13:43:43 by maraurel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int		treat_char_0(va_list ap, size_t length)
 	while (i++ < (int)length - 1)
 		write(1, " ", 1);
 	ft_putchar_fd(va_arg(ap, int), 1);
-	return(i);
+	return (i);
 }
 
 int		treat_char_1(va_list ap, size_t length)
@@ -30,7 +30,7 @@ int		treat_char_1(va_list ap, size_t length)
 	i = 0;
 	ft_putchar_fd(va_arg(ap, int), 1);
 	while (i++ < (int)length - 1)
-		write (1, " ",  1);
+		write(1, " ", 1);
 	return (i);
 }
 

@@ -1,36 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   integer_utils.c                                    :+:      :+:    :+:   */
+/*   treat_integer_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: maraurel <maraurel@student.42sp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/17 17:03:01 by maraurel          #+#    #+#             */
-/*   Updated: 2021/03/17 17:04:46 by maraurel         ###   ########.fr       */
+/*   Updated: 2021/03/21 14:14:11 by maraurel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-char	*malloc_print_integer(size_t length, char *tmp, int precision, int function)
+char	*malloc_print_integer(size_t length, char *tmp, int pre, int function)
 {
 	char	*print;
 
 	if (function == 0)
 	{
-		if (length > ft_strlen(tmp) && (int)length > precision)
+		if (length > ft_strlen(tmp) && (int)length > pre)
 			print = malloc(length * sizeof(char));
-		else if (precision > (int)ft_strlen(tmp) && precision > (int)length)
-			print = malloc(precision * sizeof(char));
+		else if (pre > (int)ft_strlen(tmp) && pre > (int)length)
+			print = malloc(pre * sizeof(char));
 		else
 			print = malloc(ft_strlen(tmp) * sizeof(char));
 	}
 	else
 	{
-		if (length > ft_strlen(tmp) && (int)length > precision)
+		if (length > ft_strlen(tmp) && (int)length > pre)
 			print = malloc(length * sizeof(char));
-		else if (precision > (int)ft_strlen(tmp) && precision > (int)length)
-			print = malloc(precision * sizeof(char));
+		else if (pre > (int)ft_strlen(tmp) && pre > (int)length)
+			print = malloc(pre * sizeof(char));
 		else
 			print = malloc(ft_strlen(tmp) * sizeof(char));
 	}
