@@ -6,7 +6,7 @@
 /*   By: maraurel <maraurel@student.42sp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/24 11:24:24 by maraurel          #+#    #+#             */
-/*   Updated: 2021/03/20 20:33:10 by maraurel         ###   ########.fr       */
+/*   Updated: 2021/03/20 22:45:26 by maraurel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,9 +80,6 @@ int		word_snippet(va_list ap, const char *s, int i)
 	}
 	*(saved + j) = '\0';
 	j = 0;
-	while (saved[j++])
-		if (is_flag(saved, j) == 0 && conversions(saved, j) == 0 && ft_isdigit(saved[j]) == 0 && saved[j] != '\0' && saved[j] != '*')
-			return (0);
 	type = s[i];
 	ret = ret + determine_type(ap, saved, type);
 	free(saved);
@@ -106,6 +103,8 @@ int		ft_printf(const char *s, ...)
 			ret = ret + word_snippet(ap, s, i);
 			while (s[i] && conversions(s, i) == 0 && is_length(s, i) != 0)
 				i++;
+			if (s[i] == '\0')
+				break ;
 		}
 		else
 		{
