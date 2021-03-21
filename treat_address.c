@@ -6,7 +6,7 @@
 /*   By: maraurel <maraurel@student.42sp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/17 09:13:11 by maraurel          #+#    #+#             */
-/*   Updated: 2021/03/21 11:42:05 by maraurel         ###   ########.fr       */
+/*   Updated: 2021/03/21 11:55:58 by maraurel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 int		treat_adr_0(va_list ap, size_t length, int precision, const char *saved)
 {
 	char	*tmp;
-	char	*tmp1;
 	char	*print;
+	char	*tmp1;
 	int		i;
 	int		j;
 	int		k;
@@ -26,8 +26,6 @@ int		treat_adr_0(va_list ap, size_t length, int precision, const char *saved)
 	j = 0;
 	k = 0;
 	tmp = get_address(va_arg(ap, unsigned long long), precision);
-	if (tmp == NULL)
-		tmp = "0x0\0";
 	if (precision > (int)ft_strlen(tmp))
 	{
 		tmp1 = ft_substr(tmp, 2, (ft_strlen(tmp) - 2));
@@ -38,14 +36,6 @@ int		treat_adr_0(va_list ap, size_t length, int precision, const char *saved)
 		k = 2;
 	}
 	ret = 0;
-	if (tmp[0] == '-')
-	{
-		tmp1 = ft_substr(tmp, 1, ft_strlen(tmp) - 1);
-		free(tmp);
-		j = 1;
-		tmp = ft_strdup(tmp1);
-		free(tmp1);
-	}
 	if (length > ft_strlen(tmp) && (int)length > precision)
 		print = malloc(length * sizeof(char));
 	else if (precision > (int)ft_strlen(tmp) && precision > (int)length)
@@ -58,25 +48,8 @@ int		treat_adr_0(va_list ap, size_t length, int precision, const char *saved)
 			*(print + i++) = '0';
 		ret = i - 1;
 	}
-	if (precision < 0)
-		precision = ft_strlen(tmp);
 	while (precision + i < (int)length && i < (int)length - (int) ft_strlen(tmp))
 		*(print + i++) = ' ';
-	if (j == 1)
-	{
-		if (ft_strlen(tmp) >= length)
-		{
-			print[0] = '-';
-			i++;
-		}
-		else if (i > 0)
-			*(print + i - 1 - ret) = '-';
-		else
-		{
-			*(print + i) = '-';
-			i++;
-		}
-	}
 	j = 0;
 	while (j++ < precision - (int)ft_strlen(tmp))
 		*(print + i++) = '0';
@@ -95,7 +68,6 @@ int		treat_adr_0(va_list ap, size_t length, int precision, const char *saved)
 int		treat_adr_1(va_list ap, size_t length, int precision)
 {
 	char	*tmp;
-	char	*tmp1;
 	char	*print;
 	int		i;
 	int		j;
@@ -104,28 +76,13 @@ int		treat_adr_1(va_list ap, size_t length, int precision)
 	i = 0;
 	j = 0;
 	tmp = get_address(va_arg(ap, unsigned long long), precision);
-	if (tmp == NULL)
-		tmp = "x0\0";
 	ret = 0;
-	if (tmp[0] == '-')
-	{
-		tmp1 = ft_substr(tmp, 1, ft_strlen(tmp) - 1);
-		free(tmp);
-		j = 1;
-		tmp = ft_strdup(tmp1);
-		free(tmp1);
-	}
 	if (length > ft_strlen(tmp) && (int)length > precision)
 		print = malloc(length * sizeof(char));
 	else if (precision > (int)ft_strlen(tmp) && precision > (int)length)
 		print = malloc(precision * sizeof(char));
 	else
 		print = malloc(ft_strlen(tmp) * sizeof(char));
-	if (j == 1)
-	{
-		print[0] = '-';
-		i++;
-	}
 	if (precision < 0)
 		precision = ft_strlen(tmp);
 	j = 0;
@@ -155,20 +112,10 @@ int		print_address(va_list ap, char *saved)
 
 	if (ft_strlen(saved) == 0)
 	{
-		print = get_address(va_arg(ap, unsigned long long), 0);
-		if (print == NULL)
-		{
-			free(print);
-			print = "0x0";
-			ft_putstr_fd(print, 1);
-			ret = ft_strlen(print);
-		}
-		else
-		{
-			ft_putstr_fd(print, 1);
-			ret = ft_strlen(print);
-			free(print);
-		}
+		print = get_address(va_arg(ap, unsigned long long), -1);
+		ft_putstr_fd(print, 1);
+		ret = ft_strlen(print);
+		free(print);
 		return (ret);
 	}
 	ret = 0;
