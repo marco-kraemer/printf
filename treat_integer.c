@@ -6,19 +6,18 @@
 /*   By: maraurel <maraurel@student.42sp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/15 15:16:19 by maraurel          #+#    #+#             */
-/*   Updated: 2021/03/21 09:33:54 by maraurel         ###   ########.fr       */
+/*   Updated: 2021/03/21 15:44:43 by maraurel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-
-int		treat_int_0_1(int precision, char *tmp, char *print, int i)
+int		treat_int_0_1(t_flags flags, char *tmp, char *print, int i)
 {
 	int		j;
 
 	j = 0;
-	while (j++ < precision - (int)ft_strlen(tmp))
+	while (j++ < flags.precision - (int)ft_strlen(tmp))
 		*(print + i++) = '0';
 	j = 0;
 	while (j < (int)ft_strlen(tmp))
@@ -31,82 +30,50 @@ int		treat_int_0_1(int precision, char *tmp, char *print, int i)
 	return (i);
 }
 
-int		treat_int_0(va_list ap, size_t length, int precision, const char *saved)
+int		treat_int_0(va_list ap, t_flags flags, const char *saved)
 {
 	char	*tmp;
 	char	*print;
-	int		ret;
 	int		i;
 	int		j;
 
 	i = 0;
 	j = 0;
-	ret = 0;
 	tmp = ft_itoa(va_arg(ap, int));
 	if (tmp[0] == '-')
 		j = 1;
 	tmp = is_negative(tmp, j);
-	print = malloc_print_integer(length, tmp, precision, 0);
-	if (saved[0] == '0' && precision == -1)
+	print = malloc_print_integer(flags.width, tmp, flags.precision, 0);
+	if (saved[0] == '0' && flags.precision == -1)
 	{
-		while (precision + i < (int)length &&
-		i < (int)length - (int)ft_strlen(tmp))
+		while (flags.precision + i < (int)flags.width &&
+		i < (int)flags.width - (int)ft_strlen(tmp))
 			*(print + i++) = '0';
-		ret = i - 1;
+		flags.k = i - 1;
 	}
-	if (precision < 0)
-		precision = ft_strlen(tmp);
-	while (precision + i < (int)length &&
-	i < (int)length - (int)ft_strlen(tmp))
+	while (flags.precision + i < (int)flags.width &&
+	i < (int)flags.width - (int)ft_strlen(tmp))
 		*(print + i++) = ' ';
 	if (j == 1)
-	{
-		if (ft_strlen(tmp) >= length)
-		{
-			print[0] = '-';
-			i++;
-		}
-		else if (i > 0)
-			*(print + i - 1 - ret) = '-';
-		else
-		{
-			*(print + i) = '-';
-			i++;
-		}
-	}
-	return (treat_int_0_1(precision, tmp, print, i));
+		i = treat_int_0_negative(tmp, print, flags, i);
+	return (treat_int_0_1(flags, tmp, print, i));
 }
 
-int		treat_int_1(va_list ap, size_t length, int precision)
+int		treat_int_1_1(t_flags flags, char *tmp, int i, char *print)
 {
-	char	*tmp;
-	char	*print;
-	int		i;
 	int		j;
 	int		ret;
 
-	i = 0;
+	if (flags.precision < 0)
+		flags.precision = ft_strlen(tmp);
 	j = 0;
-	tmp = ft_itoa(va_arg(ap, int));
-	if (tmp[0] == '-')
-		j = 1;
-	tmp = is_negative(tmp, j);
-	print = malloc_print_integer(length, tmp, precision, 1);
-	if (j == 1)
-	{
-		print[0] = '-';
-		i++;
-	}
-	if (precision < 0)
-		precision = ft_strlen(tmp);
-	j = 0;
-	while (j++ < precision - (int)ft_strlen(tmp))
+	while (j++ < flags.precision - (int)ft_strlen(tmp))
 		*(print + i++) = '0';
 	j = 0;
 	while (j < (int)ft_strlen(tmp))
 		*(print + i++) = *(tmp + j++);
 	j = 0;
-	while (precision + j++ < (int)length && i < (int)length)
+	while (flags.precision + j++ < (int)flags.width && i < (int)flags.width)
 		*(print + i++) = ' ';
 	*(print + i) = '\0';
 	ft_putstr_fd(print, 1);
@@ -117,38 +84,53 @@ int		treat_int_1(va_list ap, size_t length, int precision)
 	return (ret);
 }
 
+int		treat_int_1(va_list ap, t_flags flags)
+{
+	char	*tmp;
+	char	*print;
+	int		i;
+	int		j;
+
+	i = 0;
+	j = 0;
+	tmp = ft_itoa(va_arg(ap, int));
+	if (tmp[0] == '-')
+		j = 1;
+	tmp = is_negative(tmp, j);
+	print = malloc_print_integer(flags.width, tmp, flags.precision, 1);
+	if (j == 1)
+	{
+		print[0] = '-';
+		i++;
+	}
+	return (treat_int_1_1(flags, tmp, i, print));
+}
+
 int		print_integer(va_list ap, char *saved)
 {
 	char	*print;
-	size_t	precision;
-	size_t	length;
-	int		ret;
+	t_flags	flags;
 
-	length = get_length(ap, saved);
-	precision = get_precision(ap, saved);
+	flags.width = get_length(ap, saved);
+	flags.precision = get_precision(ap, saved);
 	if (ft_strlen(saved) == 0)
 	{
 		print = ft_itoa(va_arg(ap, int));
 		if (print == NULL)
 			print = "(null)";
 		ft_putstr_fd(print, 1);
-		ret = ft_strlen(print);
+		flags.k = ft_strlen(print);
 		free(print);
-		return (ret);
+		return (flags.k);
 	}
-	ret = 0;
-	if (precision == 0)
+	if (flags.precision == 0)
 	{
-		while (ret < (int)length)
-		{
+		flags.k = 0;
+		while (flags.k++ < (int)flags.width)
 			write(1, " ", 1);
-			ret++;
-		}
-		return (ret);
+		return (flags.k - 1);
 	}
 	if (is_flag(saved, 0) != 1 && is_flag(saved, 1) != 1)
-		ret = ret + treat_int_0(ap, length, precision, saved);
-	else
-		ret = ret + treat_int_1(ap, length, precision);
-	return (ret);
+		return (treat_int_0(ap, flags, saved));
+	return (treat_int_1(ap, flags));
 }
