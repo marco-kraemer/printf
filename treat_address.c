@@ -6,7 +6,7 @@
 /*   By: maraurel <maraurel@student.42sp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/17 09:13:11 by maraurel          #+#    #+#             */
-/*   Updated: 2021/03/21 10:10:51 by maraurel         ###   ########.fr       */
+/*   Updated: 2021/03/21 10:56:43 by maraurel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,10 @@ int		treat_adr_0(va_list ap, size_t length, int precision, const char *saved, ch
 	i = 0;
 	j = 0;
 	k = 0;
-	if (!type)
-		return (0);
 	if (precision < 0)
-		tmp = get_address(va_arg(ap, int), 16);
+		tmp = get_address(va_arg(ap, int), type);
 	else
-		tmp = get_address(va_arg(ap, int), 16);
+		tmp = get_address(va_arg(ap, int), type);
 	if (precision > (int)ft_strlen(tmp))
 	{
 		tmp1 = ft_substr(tmp, 2, (ft_strlen(tmp) - 2));
@@ -106,9 +104,7 @@ int		treat_adr_1(va_list ap, size_t length, int precision, char type)
 
 	i = 0;
 	j = 0;
-	if (!type)
-		return (0);
-	tmp = get_address(va_arg(ap, int), 16);
+	tmp = get_address(va_arg(ap, int), type);
 	ret = 0;
 	if (tmp[0] == '-')
 	{
@@ -134,11 +130,9 @@ int		treat_adr_1(va_list ap, size_t length, int precision, char type)
 	j = 0;
 	while (j++ < precision - (int)ft_strlen(tmp))
 		*(print + i++) = '0';
-	print[i] = '0';
-	print[i + 1] = 'x';
 	j = 0;
-	while (j < (int)ft_strlen(tmp) + 2)
-		*(print + (i++ + 2)) = *(tmp + j++);
+	while (j < (int)ft_strlen(tmp))
+		*(print + i++) = *(tmp + j++);
 	j = 0;
 	while (precision + j++ < (int)length && i < (int)length)
 		*(print + i++) = ' ';
@@ -160,7 +154,7 @@ int		print_address(va_list ap, char *saved)
 
 	if (ft_strlen(saved) == 0)
 	{
-		print = get_address(va_arg(ap, int), 16);
+		print = get_address(va_arg(ap, int), 'x');
 		if (print == NULL)
 		{
 			free(print);
