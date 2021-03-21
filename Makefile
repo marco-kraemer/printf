@@ -6,7 +6,7 @@
 #    By: maraurel <maraurel@student.42sp>           +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/02/24 11:24:10 by maraurel          #+#    #+#              #
-#    Updated: 2021/03/21 17:26:49 by maraurel         ###   ########.fr        #
+#    Updated: 2021/03/21 20:14:52 by maraurel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -51,7 +51,6 @@ cleanlibft:
 
 fclean: clean
 	@$(RM) $(NAME)
-	@$(RM) a.out
 	@$(MAKE) fclean -C libft
 
 
