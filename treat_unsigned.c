@@ -6,7 +6,7 @@
 /*   By: maraurel <maraurel@student.42sp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/19 20:53:20 by maraurel          #+#    #+#             */
-/*   Updated: 2021/03/21 16:30:19 by maraurel         ###   ########.fr       */
+/*   Updated: 2021/03/21 18:34:55 by maraurel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,10 @@ int		treat_unsigned_0_1(t_flags flags, char *tmp, char *print, int i)
 
 int		treat_unsigned_0(va_list ap, t_flags flags, const char *saved)
 {
-	char	*tmp;
-	char	*print;
-	int		i;
-	int		j;
+	char		*tmp;
+	char		*print;
+	int			i;
+	static int	j;
 
 	i = 0;
 	flags.k = 0;
