@@ -6,7 +6,7 @@
 /*   By: maraurel <maraurel@student.42sp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/17 17:03:01 by maraurel          #+#    #+#             */
-/*   Updated: 2021/03/21 15:32:30 by maraurel         ###   ########.fr       */
+/*   Updated: 2021/03/21 16:03:22 by maraurel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,10 @@ int		treat_int_0_negative(char *tmp, char *print, t_flags flags, int i)
 	if ((int)ft_strlen(tmp) >= flags.width)
 		print[0] = '-';
 	else if (i > 0)
-		*(print + i-- - 1 - flags.k) = '-';
+	{
+		*(print + i - 1 - flags.k) = '-';
+		i--;
+	}
 	else
 		*(print + i) = '-';
 	i++;
