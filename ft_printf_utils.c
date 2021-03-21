@@ -6,7 +6,7 @@
 /*   By: maraurel <maraurel@student.42sp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/15 15:26:09 by maraurel          #+#    #+#             */
-/*   Updated: 2021/03/21 09:35:14 by maraurel         ###   ########.fr       */
+/*   Updated: 2021/03/21 09:38:36 by maraurel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,8 +112,9 @@ int		get_precision(va_list ap, char *saved)
 				k++;
 			}
 			free(old_saved);
+			return (-1);
 		}
-		return (-1);
+		return (ret);
 	}
 	j = i;
 	k = 0;

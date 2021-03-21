@@ -6,62 +6,46 @@
 /*   By: maraurel <maraurel@student.42sp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/10 09:43:11 by maraurel          #+#    #+#             */
-/*   Updated: 2021/03/19 19:26:26 by maraurel         ###   ########.fr       */
+/*   Updated: 2021/03/21 10:08:09 by maraurel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-char	*get_address(unsigned int i, char type)
+static char	*treat_base(unsigned long long ull_save, int base,
+char *rtn, int count)
 {
-	int		j;
-	int		temp;
-	char	hex[100];
-	char	reverse[100];
-	char	*ret;
-
-	if (i == 0)
+	while (ull_save != 0)
 	{
-		ret = malloc(3);
-		ret[0] = '0';
-		ret[1] = 'x';
-		ret[2] = '0';
-		ret[3] = '\0';
-		return (ret);
-	}
-	j = 0;
-	while (i != 0)
-	{
-		temp = i % 16;
-		if (temp < 10)
-			temp = temp + 48;
+		if ((ull_save % base) < 10)
+			rtn[count - 1] = (ull_save % base) + 48;
 		else
-		{
-			if (type == 'X')
-				temp = temp + 55;
-			else
-				temp = temp + 87;
-		}
-		hex[j++] = temp;
-		i = i / 16;
+			rtn[count - 1] = (ull_save % base) + 55;
+		ull_save /= base;
+		count--;
 	}
-	j--;
-	i = 4;
-	reverse[0] = '0';
-	reverse[1] = 'x';
-	reverse[2] = '1';
-	reverse[3] = '0';
-	while (j >= 0)
-		reverse[i++] = hex[j--];
-	reverse[i] = '\0';
-	if (!(ret = malloc((i + 2) * sizeof(char))))
-		return (NULL);
-	j = 0;
-	while (reverse[j])
+	return (rtn);
+}
+
+char		*get_address(unsigned int ull, int base)
+{
+	char				*rtn;
+	unsigned long long	ull_save;
+	int					count;
+
+	rtn = 0;
+	count = 0;
+	ull_save = ull;
+	if (ull == 0)
+		return (ft_strdup("0"));
+	while (ull != 0)
 	{
-		*(ret + j) = reverse[j];
-		j++;
+		ull /= base;
+		count++;
 	}
-	ret[j] = '\0';
-	return (ret);
+	if (!(rtn = malloc(sizeof(char) * (count + 1))))
+		return (0);
+	rtn[count] = '\0';
+	rtn = treat_base(ull_save, base, rtn, count);
+	return (rtn);
 }
