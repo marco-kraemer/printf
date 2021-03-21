@@ -1,75 +1,80 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   hex.c                                              :+:      :+:    :+:   */
+/*   treat_hex.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: maraurel <maraurel@student.42sp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/03/16 22:08:00 by maraurel          #+#    #+#             */
-/*   Updated: 2021/03/19 20:14:01 by maraurel         ###   ########.fr       */
+/*   Created: 2021/03/15 15:16:19 by maraurel          #+#    #+#             */
+/*   Updated: 2021/03/21 16:22:21 by maraurel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int		treat_hex_0(va_list ap, size_t length, int precision, const char *saved, char type)
+int		treat_hex_0_1(t_flags flags, char *tmp, char *print, int i)
 {
-	char	*tmp;
-	char	*tmp1;
-	char	*print;
-	int		i;
 	int		j;
-	int		ret;
 
-	i = 0;
 	j = 0;
-	tmp = get_hex(va_arg(ap, int), type);
-	ret = 0;
-	if (tmp[0] == '-')
-	{
-		tmp1 = ft_substr(tmp, 1, ft_strlen(tmp) - 1);
-		free(tmp);
-		j = 1;
-		tmp = ft_strdup(tmp1);
-		free(tmp1);
-	}
-	if (length > ft_strlen(tmp) && (int)length > precision)
-		print = malloc(length * sizeof(char));
-	else if (precision > (int)ft_strlen(tmp) && precision > (int)length)
-		print = malloc(precision * sizeof(char));
-	else
-		print = malloc(ft_strlen(tmp) * sizeof(char));
-	if (saved[0] == '0' && precision == -1)
-	{
-		while (precision + i < (int)length && i < (int)length - (int) ft_strlen(tmp))
-			*(print + i++) = '0';
-		ret = i - 1;
-	}
-	if (precision < 0)
-		precision = ft_strlen(tmp);
-	while (precision + i < (int)length && i < (int)length - (int) ft_strlen(tmp))
-		*(print + i++) = ' ';
-	if (j == 1)
-	{
-		if (ft_strlen(tmp) >= length)
-		{
-			print[0] = '-';
-			i++;
-		}
-		else if (i > 0)
-			*(print + i - 1 - ret) = '-';
-		else
-		{
-			*(print + i) = '-';
-			i++;
-		}
-	}
-	j = 0;
-	while (j++ < precision - (int)ft_strlen(tmp))
+	while (j++ < flags.precision - (int)ft_strlen(tmp))
 		*(print + i++) = '0';
 	j = 0;
 	while (j < (int)ft_strlen(tmp))
 		*(print + i++) = *(tmp + j++);
+	*(print + i) = '\0';
+	ft_putstr_fd(print, 1);
+	i = ft_strlen(print);
+	free(tmp);
+	free(print);
+	return (i);
+}
+
+int		treat_hex_0(va_list ap, t_flags flags, const char *saved, char type)
+{
+	char	*tmp;
+	char	*print;
+	int		i;
+	int		j;
+
+	i = 0;
+	flags.k = 0;
+	tmp = get_hex(va_arg(ap, int), type);
+	if (tmp[0] == '-')
+		j = 1;
+	tmp = is_negative(tmp, j);
+	print = malloc_print_integer(flags.width, tmp, flags.precision, 0);
+	if (saved[0] == '0' && flags.precision == -1)
+	{
+		while (flags.precision + i < (int)flags.width &&
+		i < (int)flags.width - (int)ft_strlen(tmp))
+			*(print + i++) = '0';
+		flags.k = i - 1;
+	}
+	while (flags.precision + i < (int)flags.width &&
+	i < (int)flags.width - (int)ft_strlen(tmp))
+		*(print + i++) = ' ';
+	if (j == 1)
+		i = treat_int_0_negative(tmp, print, flags, i);
+	return (treat_hex_0_1(flags, tmp, print, i));
+}
+
+int		treat_hex_1_1(t_flags flags, char *tmp, int i, char *print)
+{
+	int		j;
+	int		ret;
+
+	if (flags.precision < 0)
+		flags.precision = ft_strlen(tmp);
+	j = 0;
+	while (j++ < flags.precision - (int)ft_strlen(tmp))
+		*(print + i++) = '0';
+	j = 0;
+	while (j < (int)ft_strlen(tmp))
+		*(print + i++) = *(tmp + j++);
+	j = 0;
+	while (flags.precision + j++ < (int)flags.width && i < (int)flags.width)
+		*(print + i++) = ' ';
 	*(print + i) = '\0';
 	ft_putstr_fd(print, 1);
 	ret = ft_strlen(print);
@@ -79,90 +84,53 @@ int		treat_hex_0(va_list ap, size_t length, int precision, const char *saved, ch
 	return (ret);
 }
 
-int		treat_hex_1(va_list ap, size_t length, int precision, char type)
+int		treat_hex_1(va_list ap, t_flags flags, char type)
 {
 	char	*tmp;
-	char	*tmp1;
 	char	*print;
 	int		i;
 	int		j;
-	int		ret;
 
 	i = 0;
 	j = 0;
 	tmp = get_hex(va_arg(ap, int), type);
-	ret = 0;
 	if (tmp[0] == '-')
-	{
-		tmp1 = ft_substr(tmp, 1, ft_strlen(tmp) - 1);
-		free(tmp);
 		j = 1;
-		tmp = ft_strdup(tmp1);
-		free(tmp1);
-	}
-	if (length > ft_strlen(tmp) && (int)length > precision)
-		print = malloc(length * sizeof(char));
-	else if (precision > (int)ft_strlen(tmp) && precision > (int)length)
-		print = malloc(precision * sizeof(char));
-	else
-		print = malloc(ft_strlen(tmp) * sizeof(char));
+	tmp = is_negative(tmp, j);
+	print = malloc_print_integer(flags.width, tmp, flags.precision, 1);
 	if (j == 1)
 	{
 		print[0] = '-';
 		i++;
 	}
-	if (precision < 0)
-		precision = ft_strlen(tmp);
-	j = 0;
-	while (j++ < precision - (int)ft_strlen(tmp))
-		*(print + i++) = '0';
-	j = 0;
-	while (j < (int)ft_strlen(tmp))
-		*(print + i++) = *(tmp + j++);
-	j = 0;
-	while (precision + j++ < (int)length && i < (int)length)
-		*(print + i++) = ' ';
-	*(print + i) = '\0';
-	ft_putstr_fd(print, 1);
-	ret = ft_strlen(print);
-	i = 0;
-	free(tmp);
-	free(print);
-	return (ret);
+	return (treat_hex_1_1(flags, tmp, i, print));
 }
 
 int		print_hex(va_list ap, char *saved, char type)
 {
 	char	*print;
-	size_t	precision;
-	size_t	length;
-	int		ret;
+	t_flags	flags;
 
+	flags.width = get_length(ap, saved);
+	flags.precision = get_precision(ap, saved);
 	if (ft_strlen(saved) == 0)
 	{
 		print = get_hex(va_arg(ap, int), type);
 		if (print == NULL)
 			print = "(null)";
 		ft_putstr_fd(print, 1);
-		ret = ft_strlen(print);
+		flags.k = ft_strlen(print);
 		free(print);
-		return (ret);
+		return (flags.k);
 	}
-	ret = 0;
-	length = get_length(ap, saved);
-	precision = get_precision(ap, saved);
-	if (precision == 0)
+	if (flags.precision == 0)
 	{
-		while (ret < (int)length)
-		{
+		flags.k = 0;
+		while (flags.k++ < (int)flags.width)
 			write(1, " ", 1);
-			ret++;
-		}
-		return (ret);
+		return (flags.k - 1);
 	}
 	if (is_flag(saved, 0) != 1 && is_flag(saved, 1) != 1)
-		ret = ret + treat_hex_0(ap, length, precision, saved, type);
-	else
-		ret = ret + treat_hex_1(ap, length, precision, type);
-	return (ret);
+		return (treat_hex_0(ap, flags, saved, type));
+	return (treat_hex_1(ap, flags, type));
 }

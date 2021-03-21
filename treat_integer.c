@@ -6,7 +6,7 @@
 /*   By: maraurel <maraurel@student.42sp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/15 15:16:19 by maraurel          #+#    #+#             */
-/*   Updated: 2021/03/21 16:00:25 by maraurel         ###   ########.fr       */
+/*   Updated: 2021/03/21 16:22:52 by maraurel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ int		treat_int_0(va_list ap, t_flags flags, const char *saved)
 	int		j;
 
 	i = 0;
-	j = 0;
 	flags.k = 0;
 	tmp = ft_itoa(va_arg(ap, int));
 	if (tmp[0] == '-')
